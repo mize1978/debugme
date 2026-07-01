@@ -62,7 +62,7 @@ Suggested Fix:
 | Claude API — **Streaming** | エラーログ生成・エラーレベル判定をストリーミングで返却 |
 | Turbo Streams | ストリーミングレスポンスをリアルタイムでDOMに反映 |
 | Stimulus | UI制御・インタラクション |
-| ActionCable | リアルタイム通信 |
+| ActionCable | 将来リアルタイム機能（ランキング更新・ログ一覧）を追加する場合に採用予定 |
 | 動的 OGP 生成 | X シェア時にエラーログを画像で表示 |
 | PostgreSQL | ユーザー・ログデータの保存 |
 | Docker / Docker Compose | 開発環境の再現 |
@@ -108,6 +108,16 @@ Suggested Fix:
 - [ ] Turbo Streams によるリアルタイム表示
 - [ ] 動的OGP生成（シェア画像の自動生成）
 - [ ] βリリース
+
+---
+
+## Future Ideas
+
+- 多言語対応（English / 中文 など）
+- GitHub 風ダークターミナルテーマ
+- Discord・Slack への共有
+- エラーログをカード画像として保存・ダウンロード
+- 企業・チーム向け「チームのバグ一覧」ダッシュボード
 
 ---
 
