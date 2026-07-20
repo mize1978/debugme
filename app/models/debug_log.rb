@@ -1,4 +1,6 @@
-class ErrorLog < ApplicationRecord
+class DebugLog < ApplicationRecord
+  self.table_name = "debug_logs"
+
   validates :input, presence: true, length: { maximum: 200 }
 
   def category

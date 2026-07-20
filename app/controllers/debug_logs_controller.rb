@@ -1,32 +1,32 @@
-class ErrorLogsController < ApplicationController
+class DebugLogsController < ApplicationController
   include ActionController::Live
 
   def new
-    @error_log = ErrorLog.new
-    @popular   = ErrorLog.where.not(output: nil).order(view_count: :desc).limit(5)
+    @debug_log = DebugLog.new
+    @popular   = DebugLog.where.not(output: nil).order(view_count: :desc).limit(5)
   end
 
   def create
-    @error_log = ErrorLog.new(
-      input:      params[:error_log][:input],
+    @debug_log = DebugLog.new(
+      input:      params[:debug_log][:input],
       ip_hash:    Digest::SHA256.hexdigest(request.remote_ip),
       view_count: 0
     )
 
-    if @error_log.save
-      redirect_to @error_log
+    if @debug_log.save
+      redirect_to @debug_log
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @error_log = ErrorLog.find(params[:id])
-    @error_log.increment!(:view_count)
+    @debug_log = DebugLog.find(params[:id])
+    @debug_log.increment!(:view_count)
   end
 
   def stream
-    @error_log = ErrorLog.find(params[:id])
+    @debug_log = DebugLog.find(params[:id])
 
     response.headers["Content-Type"]      = "text/event-stream"
     response.headers["Cache-Control"]     = "no-cache"
@@ -36,7 +36,7 @@ class ErrorLogsController < ApplicationController
     sse = ActionController::Live::SSE.new(response.stream, retry: 300)
 
     begin
-      generator  = ErrorLogGenerator.new(@error_log.input)
+      generator  = DebugLogGenerator.new(@debug_log.input)
       raw_json   = ""
 
       generator.stream do |chunk|
@@ -47,7 +47,7 @@ class ErrorLogsController < ApplicationController
       cleaned = raw_json.strip.gsub(/\A```(?:json)?\n?/, "").gsub(/\n?```\z/, "")
       data    = JSON.parse(cleaned)
 
-      @error_log.update!(output: data["error_log"])
+      @debug_log.update!(output: data["error_log"])
 
       sse.write(
         {
@@ -59,7 +59,7 @@ class ErrorLogsController < ApplicationController
         event: "complete"
       )
     rescue JSON::ParserError => e
-      @error_log.update!(output: raw_json)
+      @debug_log.update!(output: raw_json)
       sse.write(
         {
           type:          "complete",
@@ -77,7 +77,7 @@ class ErrorLogsController < ApplicationController
   end
 
   def ranking
-    @logs = ErrorLog.where.not(output: nil)
+    @logs = DebugLog.where.not(output: nil)
                     .order(view_count: :desc)
                     .limit(20)
   end

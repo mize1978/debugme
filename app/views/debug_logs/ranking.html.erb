@@ -1,9 +1,9 @@
-<% content_for :title, "ランキング — ErrorLog AI" %>
+<% content_for :title, "ランキング — DebugMe" %>
 
 <div class="app-layout">
   <header class="app-header">
     <a href="/" class="logo-img-wrap">
-      <img src="/images/errorlog-logo.jpg" alt="ErrorLog AI" class="logo-img">
+      <img src="/images/errorlog-logo.jpg" alt="DebugMe" class="logo-img">
     </a>
     <nav class="app-nav">
       <a href="/">新しい診断</a>
@@ -17,13 +17,13 @@
   <div class="ranking-wrap">
     <div class="ranking-header">
       <h1 class="ranking-title">🏆 Top Errors</h1>
-      <p class="ranking-subtitle">閲覧数ランキング — みんなの悩みエラーログ</p>
+      <p class="ranking-subtitle">閲覧数ランキング — みんなの悩みデバッグログ</p>
     </div>
 
     <% if @logs.any? %>
       <div class="ranking-list">
         <% @logs.each_with_index do |log, i| %>
-          <a href="<%= error_log_path(log) %>" class="ranking-item">
+          <a href="<%= debug_log_path(log) %>" class="ranking-item">
             <span class="ranking-num <%= i == 0 ? 'gold' : i == 1 ? 'silver' : i == 2 ? 'bronze' : '' %>">#<%= i + 1 %></span>
             <span class="ranking-input"><%= log.input %></span>
             <span class="ranking-views">👁 <%= log.view_count %></span>
@@ -31,7 +31,7 @@
         <% end %>
       </div>
     <% else %>
-      <p style="color:var(--text-mute);font-size:0.8rem">まだエラーログがありません。</p>
+      <p style="color:var(--text-mute);font-size:0.8rem">まだデバッグログがありません。</p>
     <% end %>
 
     <div class="mt-12" style="margin-top:24px">

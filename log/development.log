@@ -2403,3 +2403,50 @@ Completed 200 OK in 238ms (Views: 181.4ms | ActiveRecord: 17.7ms (2 queries, 0 c
 
 
   [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (95.3ms)[0m  [1m[35mCREATE DATABASE "debugme_development" ENCODING = 'unicode'[0m
+  [1m[35m (34.9ms)[0m  [1m[35mCREATE DATABASE "debugme_test" ENCODING = 'unicode'[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2661617840652654345)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-07-20 11:46:02.035573', '2026-07-20 11:46:02.035575') RETURNING "key"[0m
+Migrating to CreateErrorLogs (20260715135853)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "error_logs" ("id" bigserial primary key, "input" text, "output" text, "category" character varying, "ip_hash" character varying, "view_count" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260715135853') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RenameErrorLogsTables (20260720114424)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "error_logs" RENAME TO "debug_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER INDEX "error_logs_pkey" RENAME TO "debug_logs_pkey"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mALTER TABLE "public"."error_logs_id_seq" RENAME TO "debug_logs_id_seq"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260720114424') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(2661617840652654345)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 169.150.225.34 at 2026-07-20 11:46:17 +0000
+Cannot render console from 169.150.225.34! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DebugLogsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering debug_logs/new.html.erb within layouts/application
+  [1m[36mDebugLog Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "debug_logs" WHERE "debug_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/debug_logs/new.html.erb:160
+  Rendered debug_logs/new.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 110.7ms | GC: 6.1ms)
+Completed 200 OK in 141ms (Views: 112.4ms | ActiveRecord: 3.1ms (1 query, 0 cached) | GC: 6.1ms)
+
+
+Started GET "/" for 169.150.225.34 at 2026-07-20 11:46:22 +0000
+Cannot render console from 169.150.225.34! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by DebugLogsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering debug_logs/new.html.erb within layouts/application
+  [1m[36mDebugLog Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "debug_logs" WHERE "debug_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/debug_logs/new.html.erb:160
+  Rendered debug_logs/new.html.erb within layouts/application (Duration: 4.8ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.3ms)
+Completed 200 OK in 11ms (Views: 7.9ms | ActiveRecord: 1.0ms (1 query, 0 cached) | GC: 0.3ms)
+
+

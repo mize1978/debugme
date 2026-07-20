@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_15_135853) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_20_114424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "error_logs", force: :cascade do |t|
+  create_table "debug_logs", force: :cascade do |t|
     t.text "input"
     t.text "output"
     t.string "category"

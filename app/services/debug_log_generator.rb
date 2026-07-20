@@ -1,4 +1,4 @@
-class ErrorLogGenerator
+class DebugLogGenerator
   MODEL = "claude-sonnet-4-6"
 
   def initialize(input)
@@ -23,7 +23,7 @@ class ErrorLogGenerator
 
   def prompt
     <<~PROMPT
-      あなたはAI診断エンジン「ErrorLog AI」です。
+      あなたはAI診断エンジン「DebugMe」です。
       ユーザーの悩みを分析し、以下のJSON形式のみで応答してください。
       JSONのみを出力し、マークダウンコードブロック（```）や説明文は一切含めないでください。
 

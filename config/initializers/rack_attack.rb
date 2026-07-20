@@ -2,7 +2,7 @@ Rack::Attack.cache.store = ActiveSupport::Cache::RedisCacheStore.new(url: ENV.fe
 
 # 診断作成: IP単位で1時間に20回まで
 Rack::Attack.throttle("error_logs/ip", limit: 20, period: 1.hour) do |req|
-  req.ip if req.post? && req.path == "/error_logs"
+  req.ip if req.post? && req.path == "/debug_logs"
 end
 
 # 全リクエスト: IP単位で1分間に60回まで（ブルートフォース防止）

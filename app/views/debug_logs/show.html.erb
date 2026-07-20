@@ -1,14 +1,14 @@
-<% content_for :title, "ErrorLog AI — #{@error_log.input.truncate(30)}" %>
+<% content_for :title, "DebugMe — #{@debug_log.input.truncate(30)}" %>
 
 <div class="app-layout"
      data-controller="stream"
-     data-stream-url-value="<%= @error_log.output.blank? ? stream_error_log_path(@error_log) : "" %>"
+     data-stream-url-value="<%= @debug_log.output.blank? ? stream_debug_log_path(@debug_log) : "" %>"
 >
 
   <!-- Header -->
   <header class="app-header">
     <a href="/" class="logo-img-wrap">
-      <img src="/images/errorlog-logo.jpg" alt="ErrorLog AI" class="logo-img">
+      <img src="/images/errorlog-logo.jpg" alt="DebugMe" class="logo-img">
     </a>
     <nav class="app-nav">
       <a href="/">新しい診断</a>
@@ -37,7 +37,7 @@
       <div class="input-section">
         <p class="input-label">診断した悩み</p>
         <div class="input-field" style="cursor:default;min-height:80px;color:var(--text-dim)">
-          <%= @error_log.input %>
+          <%= @debug_log.input %>
         </div>
         <a href="/" class="btn-generate mt-12" style="margin-top:10px;display:block;text-align:center">
           + 新しい診断を始める
@@ -60,7 +60,7 @@
       <div class="cat-features">
         <p class="cat-features-title">AI 診断ツール</p>
         <ul>
-          <li>悩みをエラーログ形式に変換</li>
+          <li>悩みをデバッグログ形式に変換</li>
           <li>原因と深刻度をAIが分析</li>
           <li>解決策を3つ提案</li>
         </ul>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="console-body" data-stream-target="consoleBody">
-        <% if @error_log.output.present? %>
+        <% if @debug_log.output.present? %>
           <!-- Already generated: show directly -->
           <div class="console-line">
             <span class="console-ts">[--:--:--]</span>
@@ -89,7 +89,7 @@
             <span class="divider-label">▼ ERROR LOG GENERATED</span>
             <div class="divider-line"></div>
           </div>
-          <div class="error-log-box" style="opacity:1"><%= @error_log.output %></div>
+          <div class="error-log-box" style="opacity:1"><%= @debug_log.output %></div>
         <% else %>
           <!-- Streaming: boot sequence will go here -->
           <div data-stream-target="bootSequence"></div>
@@ -97,7 +97,7 @@
       </div>
 
       <div class="console-footer">
-        <span class="prompt">$ errorlog --analyze "<%= @error_log.input.truncate(30) %>"</span>
+        <span class="prompt">$ debugme --analyze "<%= @debug_log.input.truncate(30) %>"</span>
         <span class="cursor-blink">_</span>
       </div>
     </div>
@@ -105,7 +105,7 @@
     <!-- ── RIGHT: Analysis ── -->
     <div class="panel panel-right">
       <div class="panel-header">
-        <span>ERROR SUMMARY</span>
+        <span>DEBUG SUMMARY</span>
         <span style="font-size:0.6rem;color:var(--text-mute)">AI ENGINE</span>
       </div>
 
@@ -120,7 +120,7 @@
         </div>
         <div class="sys-status-row">
           <span class="sys-key">LOG ID</span>
-          <span class="sys-val" style="color:var(--text-dim)">#<%= @error_log.id %></span>
+          <span class="sys-val" style="color:var(--text-dim)">#<%= @debug_log.id %></span>
         </div>
       </div>
 
@@ -181,7 +181,7 @@
       <div class="fix-section">
         <p class="fix-title">🔧 SUGGESTED FIX</p>
         <ul class="fix-list" data-stream-target="fixList">
-          <% if @error_log.output.blank? %>
+          <% if @debug_log.output.blank? %>
             <li style="font-size:0.72rem;color:var(--text-mute)">診断後に表示されます...</li>
           <% end %>
         </ul>

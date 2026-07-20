@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 const BOOT = [
-  { type: "line", cls: "ok",   text: "Booting ErrorLog AI v2.4.1...",                delay: 0    },
+  { type: "line", cls: "ok",   text: "Booting DebugMe v1.0.0...",                     delay: 0    },
   { type: "line", cls: "info", text: "Initializing AI engine (claude-sonnet-4-6)...", delay: 480  },
   { type: "line", cls: "ok",   text: "Connection to Claude API established ⚡",       delay: 900  },
   { type: "prog", label: "Analyzing input data...",                                    delay: 1250 },
@@ -198,7 +198,7 @@ export default class extends Controller {
     if (!this.hasShareXTarget) return
     const firstLine = (data.error_log || "").split("\n")[0] || ""
     const sev  = (data.summary || {}).severity || 0
-    const text = encodeURIComponent(`悩みをAIがエラーログ化してくれた！\n深刻度: ${sev}%\n${firstLine}\n\n#ErrorLogAI`)
+    const text = encodeURIComponent(`悩みをAIがデバッグしてくれた！\n深刻度: ${sev}%\n${firstLine}\n\nDebug your day. #DebugMe`)
     const url  = encodeURIComponent(this.shareUrl)
     this.shareXTarget.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`
   }

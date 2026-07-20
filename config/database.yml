@@ -8,13 +8,13 @@ default: &default
 
 development:
   <<: *default
-  database: errorlog_ai_development
+  database: debugme_development
 
 test:
   <<: *default
-  database: errorlog_ai_test
+  database: debugme_test
 
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
-  database: errorlog_ai_production
+  database: debugme_production
