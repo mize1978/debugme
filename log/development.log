@@ -1,0 +1,2405 @@
+  [1m[35m (42.2ms)[0m  [1m[35mCREATE DATABASE "errorlog_ai_development" ENCODING = 'unicode'[0m
+  [1m[35m (151.8ms)[0m  [1m[35mCREATE DATABASE "errorlog_ai_test" ENCODING = 'unicode'[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5160235630377414615)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-07-15 13:58:58.767521', '2026-07-15 13:58:58.767523') RETURNING "key"[0m
+Migrating to CreateErrorLogs (20260715135853)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "error_logs" ("id" bigserial primary key, "input" text, "output" text, "category" character varying, "ip_hash" character varying, "view_count" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260715135853') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(5160235630377414615)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:05:48 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.1ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 154.2ms | GC: 8.6ms)
+Completed 200 OK in 241ms (Views: 158.8ms | ActiveRecord: 3.8ms (1 query, 0 cached) | GC: 29.2ms)
+
+
+Started GET "/favicon.ico" for 192.168.65.1 at 2026-07-15 14:05:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started POST "/error_logs" for 192.168.65.1 at 2026-07-15 14:06:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"お風呂に入りたいのに入れない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.9ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "お風呂に入りたいのに入れない"], ["output", nil], ["category", nil], ["ip_hash", "4e73a25351065e2b4628603507468bae8762ca9c65e9ec82736506215b68b0be"], ["view_count", 0], ["created_at", "2026-07-15 14:06:08.260640"], ["updated_at", "2026-07-15 14:06:08.260640"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/1
+Completed 302 Found in 9ms (ActiveRecord: 3.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/1" for 192.168.65.1 at 2026-07-15 14:06:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 1]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 3.2ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:07:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 9.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.2ms | GC: 0.0ms)
+Completed 200 OK in 18ms (Views: 12.6ms | ActiveRecord: 1.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 65.5ms | GC: 5.4ms)
+Completed 500 Internal Server Error in 92ms (ActiveRecord: 2.8ms (1 query, 0 cached) | GC: 5.4ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.2ms | GC: 0.9ms)
+Completed 500 Internal Server Error in 28ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 1.3ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:35 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.7ms | GC: 1.0ms)
+Completed 500 Internal Server Error in 28ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 1.2ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:35 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.6ms | GC: 2.7ms)
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 2.7ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.1ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.0ms | GC: 1.3ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 1.3ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:41 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.2ms | GC: 0.8ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 1.0ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 24.4ms | GC: 0.8ms)
+Completed 500 Internal Server Error in 26ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:08:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.5ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.5ms | GC: 1.5ms)
+Completed 500 Internal Server Error in 25ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 1.5ms)
+
+
+  
+ActionView::Template::Error (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotPrecompiledError (Asset `application.js` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link application.js
+
+and restart your server)
+    10:     <link rel="preconnect" href="https://fonts.googleapis.com">
+    11:     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    12:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    13:     <%= javascript_importmap_tags %>
+    14:   </head>
+    15:   <body class="bg-gray-950 text-green-400 min-h-screen font-mono">
+    16:     <header class="border-b border-green-900 px-6 py-4 flex items-center justify-between">
+  
+app/views/layouts/application.html.erb:13
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:24:36 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 85.4ms | GC: 0.0ms)
+Completed 200 OK in 111ms (Views: 87.2ms | ActiveRecord: 2.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:24:37 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 2.3ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.3ms)
+Completed 200 OK in 6ms (Views: 4.5ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started POST "/error_logs" for 192.168.65.1 at 2026-07-15 14:24:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.0ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "4e73a25351065e2b4628603507468bae8762ca9c65e9ec82736506215b68b0be"], ["view_count", 0], ["created_at", "2026-07-15 14:24:49.737920"], ["updated_at", "2026-07-15 14:24:49.737920"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/2
+Completed 302 Found in 12ms (ActiveRecord: 3.1ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/2" for 192.168.65.1 at 2026-07-15 14:24:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 2]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.9ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.6ms | GC: 0.1ms)
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/2/stream" for 192.168.65.1 at 2026-07-15 14:24:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 4ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:38:10 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 47.4ms | GC: 0.0ms)
+Completed 200 OK in 76ms (Views: 49.4ms | ActiveRecord: 3.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/2" for 192.168.65.1 at 2026-07-15 14:38:11 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 2]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 4.9ms | ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/2/stream" for 192.168.65.1 at 2026-07-15 14:38:11 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 3ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/2" for 192.168.65.1 at 2026-07-15 14:38:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.1ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 2]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.1ms)
+Completed 200 OK in 24ms (Views: 3.6ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 14.8ms)
+
+
+Started GET "/error_logs/2/stream" for 192.168.65.1 at 2026-07-15 14:38:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 2ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/2" for 192.168.65.1 at 2026-07-15 14:38:14 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.6ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 2]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.3ms)
+Completed 200 OK in 9ms (Views: 4.3ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/2/stream" for 192.168.65.1 at 2026-07-15 14:38:14 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 2ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:38:15 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.2ms)
+Completed 200 OK in 8ms (Views: 6.3ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started POST "/error_logs" for 192.168.65.1 at 2026-07-15 14:39:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (3.1ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "4e73a25351065e2b4628603507468bae8762ca9c65e9ec82736506215b68b0be"], ["view_count", 0], ["created_at", "2026-07-15 14:39:45.728985"], ["updated_at", "2026-07-15 14:39:45.728985"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/3
+Completed 302 Found in 29ms (ActiveRecord: 4.8ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/error_logs/3" for 192.168.65.1 at 2026-07-15 14:39:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 3]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.1ms)
+Completed 200 OK in 7ms (Views: 3.8ms | ActiveRecord: 0.6ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/3/stream" for 192.168.65.1 at 2026-07-15 14:39:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 1ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/error_logs" for 192.168.65.1 at 2026-07-15 14:42:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (0.7ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "4e73a25351065e2b4628603507468bae8762ca9c65e9ec82736506215b68b0be"], ["view_count", 0], ["created_at", "2026-07-15 14:42:34.296581"], ["updated_at", "2026-07-15 14:42:34.296581"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/4
+Completed 302 Found in 24ms (ActiveRecord: 3.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/4" for 192.168.65.1 at 2026-07-15 14:42:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mErrorLog Load (0.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 4]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 48.1ms | GC: 6.3ms)
+Completed 200 OK in 59ms (Views: 50.3ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 6.3ms)
+
+
+Started GET "/error_logs/4/stream" for 192.168.65.1 at 2026-07-15 14:42:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 3ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/4" for 192.168.65.1 at 2026-07-15 14:42:38 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mErrorLog Load (1.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.9ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 4]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.3ms)
+Completed 200 OK in 14ms (Views: 6.1ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/error_logs/4/stream" for 192.168.65.1 at 2026-07-15 14:42:38 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 3ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 11.4ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.7ms | GC: 0.6ms)
+Completed 200 OK in 21ms (Views: 14.0ms | ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 0.4ms)
+Completed 200 OK in 9ms (Views: 6.7ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.6ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.3ms)
+Completed 200 OK in 9ms (Views: 6.8ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.8ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.5ms)
+Completed 200 OK in 9ms (Views: 6.7ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 6.6ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | GC: 0.3ms)
+Completed 200 OK in 8ms (Views: 6.2ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.3ms)
+Completed 200 OK in 8ms (Views: 6.3ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.5ms)
+Completed 200 OK in 9ms (Views: 6.5ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 0.2ms)
+Completed 200 OK in 9ms (Views: 6.5ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 192.168.65.1 at 2026-07-15 14:42:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | GC: 0.3ms)
+Completed 200 OK in 9ms (Views: 6.5ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/favicon.ico" for 192.168.65.1 at 2026-07-15 14:42:50 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started POST "/error_logs" for 192.168.65.1 at 2026-07-15 14:43:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.4ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "4e73a25351065e2b4628603507468bae8762ca9c65e9ec82736506215b68b0be"], ["view_count", 0], ["created_at", "2026-07-15 14:43:01.096391"], ["updated_at", "2026-07-15 14:43:01.096391"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/5
+Completed 302 Found in 15ms (ActiveRecord: 3.9ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/error_logs/5" for 192.168.65.1 at 2026-07-15 14:43:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 5]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.1ms)
+Completed 200 OK in 9ms (Views: 5.4ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/5/stream" for 192.168.65.1 at 2026-07-15 14:43:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 2ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/5" for 192.168.65.1 at 2026-07-15 14:46:22 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 5]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 37.3ms | GC: 0.0ms)
+Completed 200 OK in 66ms (Views: 39.1ms | ActiveRecord: 9.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/5/stream" for 192.168.65.1 at 2026-07-15 14:46:22 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Started GET "/error_logs/5" for 192.168.65.1 at 2026-07-15 14:46:23 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.7ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 5]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.0ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 4.5ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/5/stream" for 192.168.65.1 at 2026-07-15 14:46:23 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Started GET "/error_logs/5" for 160.79.104.10 at 2026-07-15 14:46:24 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.8ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 5]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 3.2ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/5/stream" for 160.79.104.10 at 2026-07-15 14:46:24 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"5"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 14:46:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Completed 500 Internal Server Error in 6816ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 19.1ms)
+
+
+
+ActionController::Live::ClientDisconnected (client disconnected):
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:194:in `write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:139:in `block in perform_write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:137:in `each'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:137:in `perform_write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:127:in `write'
+  /app/app/controllers/error_logs_controller.rb:51:in `rescue in stream'
+  /app/app/controllers/error_logs_controller.rb:50:in `stream'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/basic_implicit_render.rb:8:in `send_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/base.rb:215:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/rendering.rb:193:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/callbacks.rb:261:in `block in process_action'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+  /usr/local/bundle/gems/turbo-rails-2.0.23/lib/turbo-rails.rb:24:in `with_request_id'
+  /usr/local/bundle/gems/turbo-rails-2.0.23/app/controllers/concerns/turbo/request_id_tracking.rb:10:in `turbo_tracking_request_id'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+  /usr/local/bundle/gems/actiontext-7.2.3.1/lib/action_text/rendering.rb:25:in `with_renderer'
+  /usr/local/bundle/gems/actiontext-7.2.3.1/lib/action_text/engine.rb:71:in `block (4 levels) in <class:Engine>'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `instance_exec'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:141:in `run_callbacks'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/callbacks.rb:260:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/rescue.rb:27:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/instrumentation.rb:77:in `block in process_action'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications.rb:210:in `block in instrument'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications.rb:210:in `instrument'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/instrumentation.rb:76:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+  /usr/local/bundle/gems/activerecord-7.2.3.1/lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/base.rb:152:in `process'
+  /usr/local/bundle/gems/actionview-7.2.3.1/lib/action_view/rendering.rb:40:in `process'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:294:in `block (2 levels) in process'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/concurrency/share_lock.rb:162:in `sharing'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/dependencies/interlock.rb:37:in `running'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:285:in `block in process'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:377:in `block in new_controller_thread'
+
+
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (0.8ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 14:46:30.474355"], ["updated_at", "2026-07-15 14:46:30.474355"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/6
+Completed 302 Found in 4ms (ActiveRecord: 1.2ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/6" for 160.79.104.10 at 2026-07-15 14:46:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mErrorLog Load (0.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.3ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 6]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 1.6ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/error_logs/6/stream" for 160.79.104.10 at 2026-07-15 14:46:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"6"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 6744ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 1.3ms)
+
+
+Completed 500 Internal Server Error in 8840ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 20.1ms)
+
+
+
+ActionController::Live::ClientDisconnected (client disconnected):
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:194:in `write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:139:in `block in perform_write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:137:in `each'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:137:in `perform_write'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:127:in `write'
+  /app/app/controllers/error_logs_controller.rb:51:in `rescue in stream'
+  /app/app/controllers/error_logs_controller.rb:50:in `stream'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/basic_implicit_render.rb:8:in `send_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/base.rb:215:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/rendering.rb:193:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/callbacks.rb:261:in `block in process_action'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+  /usr/local/bundle/gems/turbo-rails-2.0.23/lib/turbo-rails.rb:24:in `with_request_id'
+  /usr/local/bundle/gems/turbo-rails-2.0.23/app/controllers/concerns/turbo/request_id_tracking.rb:10:in `turbo_tracking_request_id'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+  /usr/local/bundle/gems/actiontext-7.2.3.1/lib/action_text/rendering.rb:25:in `with_renderer'
+  /usr/local/bundle/gems/actiontext-7.2.3.1/lib/action_text/engine.rb:71:in `block (4 levels) in <class:Engine>'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `instance_exec'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/callbacks.rb:141:in `run_callbacks'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/callbacks.rb:260:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/rescue.rb:27:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/instrumentation.rb:77:in `block in process_action'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications.rb:210:in `block in instrument'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/notifications.rb:210:in `instrument'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/instrumentation.rb:76:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+  /usr/local/bundle/gems/activerecord-7.2.3.1/lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/abstract_controller/base.rb:152:in `process'
+  /usr/local/bundle/gems/actionview-7.2.3.1/lib/action_view/rendering.rb:40:in `process'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:294:in `block (2 levels) in process'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/concurrency/share_lock.rb:162:in `sharing'
+  /usr/local/bundle/gems/activesupport-7.2.3.1/lib/active_support/dependencies/interlock.rb:37:in `running'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:285:in `block in process'
+  /usr/local/bundle/gems/actionpack-7.2.3.1/lib/action_controller/metal/live.rb:377:in `block in new_controller_thread'
+
+
+Completed 200 OK in 6984ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 14:46:50 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 19.9ms | GC: 1.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.3ms | GC: 1.8ms)
+Completed 200 OK in 32ms (Views: 22.8ms | ActiveRecord: 1.2ms (1 query, 0 cached) | GC: 1.8ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 14:46:58 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"うううううううう"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (1.8ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "うううううううう"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 14:46:58.066745"], ["updated_at", "2026-07-15 14:46:58.066745"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/7
+Completed 302 Found in 10ms (ActiveRecord: 2.6ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/7" for 160.79.104.10 at 2026-07-15 14:46:58 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 7]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.2ms)
+Completed 200 OK in 7ms (Views: 3.3ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/7/stream" for 160.79.104.10 at 2026-07-15 14:46:58 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"7"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 7615ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/7/stream" for 160.79.104.10 at 2026-07-15 14:48:16 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"7"}
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Completed 200 OK in 7169ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/7/stream" for 160.79.104.10 at 2026-07-15 14:49:04 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"7"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+  [1m[36mErrorLog Update (4.4ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] UnhandledEmotionException\n感情バッファがオーバーフロー。\"うう\"の再帰呼び出しが限界を突破しました。\n\n  at Human.suppressFeelings (heart.rb:line 404)\n  at Soul.bottleItAllUp (mental_health.rb:line 999)\n\n再試行回数    : おそらく何度も\n最終通信      : だいぶ前\nエラーレベル  : 🔴 FATAL\n\nSuggested Fix:\n  → \"うう\"を声に出すだけでもスタックトレースが少し短くなります。泣いてOK。\n  → 原因不明のエラーは一人でデバッグしなくていいです。誰かに見せてみましょう。\n  → 今夜はとりあえずプロセスを再起動（＝寝る）してください。明日のあなたはバージョンが上がっています。"], ["updated_at", "2026-07-15 14:49:10.833820"], ["id", 7]]
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+Completed 200 OK in 6707ms (ActiveRecord: 14.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 14:49:19 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:37
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 11.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 56.0ms | GC: 0.0ms)
+Completed 200 OK in 72ms (Views: 59.8ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 14:49:37 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏ができない"}, "commit"=>"[ エラーログを生成する ]"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (1.3ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏ができない"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 14:49:37.019675"], ["updated_at", "2026-07-15 14:49:37.019675"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/8
+Completed 302 Found in 6ms (ActiveRecord: 2.2ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/8" for 160.79.104.10 at 2026-07-15 14:49:37 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 8]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.2ms)
+Completed 200 OK in 6ms (Views: 3.3ms | ActiveRecord: 0.6ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/8/stream" for 160.79.104.10 at 2026-07-15 14:49:37 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"8"}
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+Started GET "/" for 160.79.104.10 at 2026-07-15 14:49:40 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:33
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:37
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 6.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.6ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 9.3ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+  [1m[36mErrorLog Update (3.0ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] NullPointerException: RelationshipTargetNotFoundException\n恋愛対象へのインスタンス参照に失敗しました。ポインタが3年間 nil を指し続けています。\n\n  at LoveLife.findPartner (heart.rb:24)\n  at SocialModule.approachStranger (courage.rb:3)\n\n再試行回数    : 0\n最終通信      : 記憶域外（計測不能）\nエラーレベル  : 🟠 ERROR\n\nSuggested Fix:\n  → courage.rb の例外処理を見直し、声をかける前に try-catch を外してみてください\n  → findPartner() の検索条件が厳しすぎる可能性があります。WHERE句を少し緩めると新しいレコードが見つかるかもしれません\n  → そもそも LoveLife モジュールは予測不能な非同期処理です。焦らず実行し続ければ、いつか必ずコールバックが返ってきます"], ["updated_at", "2026-07-15 14:49:44.070227"], ["id", 8]]
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:47:in `stream'
+Completed 200 OK in 7010ms (ActiveRecord: 4.3ms (2 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:06:46 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.2ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 86.1ms | GC: 36.5ms)
+Completed 200 OK in 103ms (Views: 86.7ms | ActiveRecord: 2.8ms (2 queries, 0 cached) | GC: 37.0ms)
+
+
+Started GET "/error_logs/8" for 160.79.104.10 at 2026-07-15 15:07:13 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 8]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.2ms)
+Completed 200 OK in 15ms (Views: 4.8ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:10:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (4.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 17.0ms | GC: 1.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.7ms | GC: 1.7ms)
+Completed 200 OK in 30ms (Views: 20.3ms | ActiveRecord: 4.7ms (2 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:10:05 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (2.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 9.9ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.4ms | GC: 0.4ms)
+Completed 200 OK in 19ms (Views: 11.2ms | ActiveRecord: 2.9ms (2 queries, 0 cached) | GC: 3.1ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:10:07 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.7ms | GC: 0.9ms)
+Completed 200 OK in 11ms (Views: 8.6ms | ActiveRecord: 0.7ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:13:17 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (3.2ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 14.1ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.0ms | GC: 0.7ms)
+Completed 200 OK in 25ms (Views: 16.0ms | ActiveRecord: 3.9ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:13:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"彼氏を作りたい！！！！"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (3.5ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "彼氏を作りたい！！！！"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:13:30.050702"], ["updated_at", "2026-07-15 15:13:30.050702"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/9
+Completed 302 Found in 13ms (ActiveRecord: 5.0ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/9" for 160.79.104.10 at 2026-07-15 15:13:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.7ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 9]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.1ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 3.4ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/9/stream" for 160.79.104.10 at 2026-07-15 15:13:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"9"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (2.4ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] LoveModule::PartnerNotFoundException (NullReferenceException: Boyfriend not found)\n彼氏インスタンスの生成に失敗しました。オブジェクトが存在しません。\n\n  at Life.relationship_status (life.rb:24)\n  at Heart.desire_check (mind.rb:88)\n  at Society.comparison_engine (social.rb:114)\n\n再試行回数    : 何度も（具体的な数値はプライバシー保護のため非公開）\n最終通信      : 記憶が曖昧なほど前\nエラーレベル  : 🟠 ERROR"], ["updated_at", "2026-07-15 15:13:41.220956"], ["id", 9]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 11095ms (ActiveRecord: 5.8ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:14:02 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.5ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.2ms | GC: 0.2ms)
+Completed 200 OK in 12ms (Views: 9.1ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:14:11 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"お金が欲しい"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.3ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "お金が欲しい"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:14:11.182404"], ["updated_at", "2026-07-15 15:14:11.182404"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/10
+Completed 302 Found in 13ms (ActiveRecord: 3.3ms (1 query, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:14:11 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.4ms)
+Completed 200 OK in 11ms (Views: 4.7ms | ActiveRecord: 1.6ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/error_logs/10/stream" for 160.79.104.10 at 2026-07-15 15:14:11 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (5.5ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] Wallet::EmptyException (InsufficientFundsError)\nお財布の残高が慢性的に低空飛行を続けています。\n\n  at Life.income_vs_expense (life.rb:42)\n  at Self.money_mindset_check (mind.rb:118)\n  at Society.comparison_engine (social.rb:999)\n\n再試行回数    : 毎月1日\n最終通信      : 給料日3日前\nエラーレベル  : 🟠 ERROR"], ["updated_at", "2026-07-15 15:14:20.972265"], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 9721ms (ActiveRecord: 6.9ms (2 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:14:41 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:154
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:157
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.5ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.0ms | GC: 0.3ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:27:04 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 3.3ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.2ms | GC: 2.0ms)
+Completed 200 OK in 44ms (Views: 26.0ms | ActiveRecord: 2.7ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:27:14 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (2.3ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 4.3ms | ActiveRecord: 2.5ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:27:23 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 10.2ms | GC: 1.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.8ms | GC: 1.3ms)
+Completed 200 OK in 19ms (Views: 12.9ms | ActiveRecord: 2.6ms (2 queries, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:28:36 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 18.3ms | GC: 1.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 22.5ms | GC: 1.2ms)
+Completed 200 OK in 29ms (Views: 21.1ms | ActiveRecord: 2.3ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:28:40 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.2ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | GC: 1.2ms)
+Completed 200 OK in 12ms (Views: 9.1ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:28:41 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.1ms | GC: 0.4ms)
+Completed 200 OK in 11ms (Views: 8.7ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:33:24 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.0ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 29.3ms | GC: 2.0ms)
+Completed 200 OK in 43ms (Views: 30.3ms | ActiveRecord: 5.5ms (2 queries, 0 cached) | GC: 2.4ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:33:25 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.6ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.1ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 3.7ms | ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:33:27 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (1.1ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.3ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | GC: 0.3ms)
+Completed 200 OK in 15ms (Views: 5.7ms | ActiveRecord: 2.3ms (2 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:33:28 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.3ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.4ms)
+Completed 200 OK in 14ms (Views: 5.2ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:33:29 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.9ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.3ms)
+Completed 200 OK in 14ms (Views: 5.1ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:33:29 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 5.0ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:34:56 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.9ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.9ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 51.1ms | GC: 16.6ms)
+Completed 200 OK in 62ms (Views: 51.9ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 17.1ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:35:02 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.9ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 7.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.9ms | GC: 0.4ms)
+Completed 200 OK in 15ms (Views: 9.5ms | ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:35:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.9ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 4.7ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:35:04 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.2ms)
+Completed 200 OK in 12ms (Views: 4.8ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:35:05 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.1ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 6.5ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:35:05 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.4ms)
+Completed 200 OK in 13ms (Views: 6.2ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/error_logs/10" for 160.79.104.10 at 2026-07-15 15:35:06 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.3ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 10]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.8ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.5ms)
+Completed 200 OK in 13ms (Views: 5.1ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:35:09 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.2ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.0ms | GC: 0.8ms)
+Completed 200 OK in 13ms (Views: 9.6ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:35:10 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.9ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.6ms | GC: 0.3ms)
+Completed 200 OK in 10ms (Views: 7.4ms | ActiveRecord: 0.7ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:35:20 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"netai"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (4.0ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "netai"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:35:20.035378"], ["updated_at", "2026-07-15 15:35:20.035378"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/11
+Completed 302 Found in 20ms (ActiveRecord: 5.3ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/error_logs/11" for 160.79.104.10 at 2026-07-15 15:35:20 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.7ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.2ms)
+Completed 200 OK in 11ms (Views: 5.5ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/11/stream" for 160.79.104.10 at 2026-07-15 15:35:20 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (5.5ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] SleepSystem::ChronicFatigueSyndrome (UnexpectedDrowsinessException)\n眠いのに寝れない、または寝すぎても眠い、という量子的矛盾状態を検出。\n\n  at Life.energy_management (life.rb:42)\n  at Self.motivation_check (mind.rb:88)\n  at Society.daily_routine_engine (social.rb:404)\n\n再試行回数    : 何度二度寝しても解決せず\n最終通信      : 夢の中から5分前\nエラーレベル  : 🟡 WARN"], ["updated_at", "2026-07-15 15:35:30.331590"], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 10210ms (ActiveRecord: 7.4ms (2 queries, 0 cached) | GC: 13.2ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:38:13 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (2.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 12.3ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 49.2ms | GC: 4.9ms)
+Completed 200 OK in 57ms (Views: 48.7ms | ActiveRecord: 2.7ms (2 queries, 0 cached) | GC: 4.9ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:38:25 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 7.5ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.2ms | GC: 0.6ms)
+Completed 200 OK in 15ms (Views: 10.1ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:40:20 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 10.4ms | GC: 6.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 34.5ms | GC: 7.9ms)
+Completed 200 OK in 47ms (Views: 35.7ms | ActiveRecord: 3.9ms (2 queries, 0 cached) | GC: 8.2ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:40:21 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.4ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | GC: 0.4ms)
+Completed 200 OK in 12ms (Views: 9.4ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/11" for 160.79.104.10 at 2026-07-15 15:40:22 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.8ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (2.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 1.6ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | GC: 0.3ms)
+Completed 200 OK in 18ms (Views: 5.7ms | ActiveRecord: 3.1ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/11" for 160.79.104.10 at 2026-07-15 15:40:23 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.1ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 5.3ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/11" for 160.79.104.10 at 2026-07-15 15:40:23 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.1ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.4ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 4.1ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/error_logs/11" for 160.79.104.10 at 2026-07-15 15:40:24 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 11]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | GC: 0.1ms)
+Completed 200 OK in 11ms (Views: 4.8ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:40:25 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.2ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.1ms)
+Completed 200 OK in 11ms (Views: 8.2ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:40:35 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.9ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.2ms | GC: 0.2ms)
+Completed 200 OK in 11ms (Views: 8.6ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:40:41 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"眠い"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.9ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "眠い"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:40:41.303937"], ["updated_at", "2026-07-15 15:40:41.303937"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/12
+Completed 302 Found in 18ms (ActiveRecord: 4.8ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:40:41 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.6ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 3.1ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 3.9ms)
+
+
+Started GET "/error_logs/12/stream" for 160.79.104.10 at 2026-07-15 15:40:41 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (1.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (5.1ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] SleepSystem::ChronicFatigueException (NullEnergyError: insufficient rest detected)\n脳のバッテリー残量が致命的に低下しています。充電を強くお勧めします。\n\n  at Body.energy_check (human.rb:7)\n  at Brain.focus_attempt (mind.rb:3)\n  at Bed.calling_you (bedroom.rb:999)\n\n再試行回数    : 何度も起き上がろうとして失敗\n最終通信      : おそらく8時間以上前\nエラーレベル  : 🟡 WARN"], ["updated_at", "2026-07-15 15:40:50.542110"], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 9160ms (ActiveRecord: 8.2ms (2 queries, 0 cached) | GC: 2.6ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:40:58 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 9.2ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.9ms | GC: 0.3ms)
+Completed 200 OK in 17ms (Views: 13.1ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:00 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 0.7ms)
+Completed 200 OK in 14ms (Views: 6.3ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:01 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 4.6ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:01 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.9ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.4ms)
+Completed 200 OK in 12ms (Views: 4.7ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:02 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (1.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.6ms)
+Completed 200 OK in 17ms (Views: 7.6ms | ActiveRecord: 3.2ms (2 queries, 0 cached) | GC: 1.6ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.0ms | GC: 0.4ms)
+Completed 200 OK in 12ms (Views: 5.8ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 5.5ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/12" for 160.79.104.10 at 2026-07-15 15:41:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 12]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.3ms)
+Completed 200 OK in 17ms (Views: 5.6ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:41:06 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.8ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.6ms | GC: 0.5ms)
+Completed 200 OK in 13ms (Views: 10.3ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:41:08 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.1ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.4ms | GC: 0.7ms)
+Completed 200 OK in 11ms (Views: 9.0ms | ActiveRecord: 0.7ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:41:09 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.2ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.9ms | GC: 0.3ms)
+Completed 200 OK in 13ms (Views: 9.9ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:41:14 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"眠い\r\n"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (4.6ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "眠い\r\n"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:41:14.740206"], ["updated_at", "2026-07-15 15:41:14.740206"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/13
+Completed 302 Found in 28ms (ActiveRecord: 6.3ms (1 query, 0 cached) | GC: 11.5ms)
+
+
+Started GET "/error_logs/13" for 160.79.104.10 at 2026-07-15 15:41:14 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.6ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 13]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 1.8ms | GC: 1.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 1.3ms)
+Completed 200 OK in 10ms (Views: 5.4ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/error_logs/13/stream" for 160.79.104.10 at 2026-07-15 15:41:14 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"13"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (3.6ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] BrainSystem::SleepDeprivationException (NullEnergyPointerError)\n脳内エネルギーが枯渇しており、覚醒状態の維持に失敗しました。\n\n  at Life.morning_boot_sequence (life.rb:7)\n  at Self.motivation_loader (mind.rb:3)\n  at Society.stay_awake_engine (social.rb:99)\n\n再試行回数    : 今日だけで14回\n最終通信      : まぶたが閉じる3秒前\nエラーレベル  : 🟡 WARN"], ["updated_at", "2026-07-15 15:41:22.972934"], ["id", 13]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 8148ms (ActiveRecord: 4.9ms (2 queries, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:41:36 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:163
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:166
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 6.4ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.5ms | GC: 0.5ms)
+Completed 200 OK in 14ms (Views: 11.0ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:43:17 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.6ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 7.1ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 88.3ms | GC: 45.3ms)
+Completed 200 OK in 104ms (Views: 89.1ms | ActiveRecord: 5.1ms (2 queries, 0 cached) | GC: 46.5ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 15:43:18 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.8ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.9ms | GC: 0.6ms)
+Completed 200 OK in 10ms (Views: 7.6ms | ActiveRecord: 0.7ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 15:43:22 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"samui"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.6ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "samui"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 15:43:22.929602"], ["updated_at", "2026-07-15 15:43:22.929602"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/14
+Completed 302 Found in 14ms (ActiveRecord: 4.8ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 15:43:22 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (0.6ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 0.3ms)
+Completed 200 OK in 13ms (Views: 5.6ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/error_logs/14/stream" for 160.79.104.10 at 2026-07-15 15:43:23 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (4.4ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] EnvironmentException::ThermalComfortNotFound (TemperatureUnderflowError)\n外気温が人類の快適ゾーンを大幅に下回っています。\n\n  at Life.seasonal_adjustment (life.rb:12)\n  at Self.body_temperature_check (mind.rb:3)\n  at Society.weather_acceptance_engine (social.rb:99)\n\n再試行回数    : 季節の数だけ（年4回）\n最終通信      : 温かかった頃・数ヶ月前\nエラーレベル  : 🟡 WARN"], ["updated_at", "2026-07-15 15:43:32.120965"], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 9118ms (ActiveRecord: 5.8ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 23:30:29 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (13.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 18.9ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.9ms | GC: 0.3ms)
+Completed 200 OK in 28ms (Views: 8.3ms | ActiveRecord: 16.4ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 23:32:02 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.5ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 9.7ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 24.1ms | GC: 0.3ms)
+Completed 200 OK in 29ms (Views: 23.3ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:03 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.8ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 5.2ms | ActiveRecord: 2.1ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:04 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.9ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 5.4ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:04 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.4ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 6.5ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:05 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.9ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 5.5ms | ActiveRecord: 2.1ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:06 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.4ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.7ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.2ms | GC: 0.2ms)
+Completed 200 OK in 13ms (Views: 6.2ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:32:07 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.8ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.2ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 5.0ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 23:33:19 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (2.1ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 9.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.7ms | GC: 0.6ms)
+Completed 200 OK in 28ms (Views: 22.3ms | ActiveRecord: 2.3ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:33:20 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.7ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 5.7ms | ActiveRecord: 2.1ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/error_logs/14" for 160.79.104.10 at 2026-07-15 23:33:21 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.5ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 14]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | GC: 0.5ms)
+Completed 200 OK in 14ms (Views: 6.1ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 23:33:22 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 4.9ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.9ms | GC: 0.3ms)
+Completed 200 OK in 10ms (Views: 7.9ms | ActiveRecord: 0.7ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 160.79.104.10 at 2026-07-15 23:33:25 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 5.0ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.3ms | GC: 0.5ms)
+Completed 200 OK in 11ms (Views: 8.3ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started POST "/error_logs" for 160.79.104.10 at 2026-07-15 23:33:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "error_log"=>{"input"=>"暑い"}, "commit"=>"⚡ 診断を開始する"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mErrorLog Create (2.9ms)[0m  [1m[32mINSERT INTO "error_logs" ("input", "output", "category", "ip_hash", "view_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["input", "暑い"], ["output", nil], ["category", nil], ["ip_hash", "a34c96d41ec0b9c72e73250c096933e4cae517e024680933c328a85eaa6b33af"], ["view_count", 0], ["created_at", "2026-07-15 23:33:30.597965"], ["updated_at", "2026-07-15 23:33:30.597965"]]
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:16:in `create'
+Redirected to http://localhost:3002/error_logs/15
+Completed 302 Found in 12ms (ActiveRecord: 3.9ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/error_logs/15" for 160.79.104.10 at 2026-07-15 23:33:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#show as HTML
+  Parameters: {"id"=>"15"}
+  [1m[36mErrorLog Load (0.3ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:24:in `show'
+  [1m[36mErrorLog Update All (1.0ms)[0m  [1m[33mUPDATE "error_logs" SET "view_count" = COALESCE("view_count", 0) + $1 WHERE "error_logs"."id" = $2[0m  [["view_count", 1], ["id", 15]]
+  ↳ app/controllers/error_logs_controller.rb:25:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/show.html.erb within layouts/application
+  Rendered error_logs/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.6ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 4.0ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/error_logs/15/stream" for 160.79.104.10 at 2026-07-15 23:33:30 +0000
+Cannot render console from 160.79.104.10! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ErrorLogsController#stream as */*
+  Parameters: {"id"=>"15"}
+  [1m[36mErrorLog Load (0.5ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/error_logs_controller.rb:29:in `stream'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mErrorLog Update (5.0ms)[0m  [1m[33mUPDATE "error_logs" SET "output" = $1, "updated_at" = $2 WHERE "error_logs"."id" = $3[0m  [["output", "[ERROR] Environment::TemperatureException (ThermalOverloadError)\n気温が人類の快適域を大幅に逸脱しています。冷却システムが追いつきません。\n\n  at Life.seasonal_adaptation (life.rb:7)\n  at Self.sweat_management (mind.rb:33)\n  at Society.global_warming_side_effect (social.rb:2024)\n\n再試行回数    : 365（毎年）\n最終通信      : 3分前（扇風機との交信）\nエラーレベル  : 🟡 WARN"], ["updated_at", "2026-07-15 23:33:39.587871"], ["id", 15]]
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/error_logs_controller.rb:50:in `stream'
+Completed 200 OK in 8915ms (ActiveRecord: 6.6ms (2 queries, 0 cached) | GC: 2.0ms)
+
+
+Started GET "/" for 169.150.225.34 at 2026-07-20 11:26:41 +0000
+Cannot render console from 169.150.225.34! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ErrorLogsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering error_logs/new.html.erb within layouts/application
+  [1m[36mErrorLog Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/error_logs/new.html.erb:160
+  [1m[36mErrorLog Load (0.2ms)[0m  [1m[34mSELECT "error_logs".* FROM "error_logs" WHERE "error_logs"."output" IS NOT NULL ORDER BY "error_logs"."view_count" DESC LIMIT $1[0m  [["LIMIT", 5]]
+  ↳ app/views/error_logs/new.html.erb:163
+  Rendered error_logs/new.html.erb within layouts/application (Duration: 8.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 178.3ms | GC: 0.0ms)
+Completed 200 OK in 238ms (Views: 181.4ms | ActiveRecord: 17.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

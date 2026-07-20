@@ -1,0 +1,173 @@
+<% content_for :title, "ErrorLog AI — 悩みをエラーログに変換" %>
+
+<div class="app-layout">
+
+  <!-- Header -->
+  <header class="app-header">
+    <a href="/" class="logo-img-wrap">
+      <img src="/images/errorlog-logo.jpg" alt="ErrorLog AI" class="logo-img">
+    </a>
+    <nav class="app-nav">
+      <a href="/ranking">ランキング</a>
+    </nav>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      SYSTEM ONLINE
+    </div>
+  </header>
+
+  <!-- 3-column grid -->
+  <div class="app-grid" data-controller="stream">
+
+    <!-- ── LEFT: Input ── -->
+    <div class="panel panel-left">
+      <div class="panel-header">
+        <span>INPUT CONSOLE</span>
+        <div class="dots">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+        </div>
+      </div>
+
+      <div class="input-section">
+        <p class="input-label">悩みを入力してください</p>
+        <%= form_with model: ErrorLog.new, url: error_logs_path, data: { turbo: false } do |f| %>
+          <%= f.text_area :input,
+                placeholder: "例：彼氏から返信が来ない、仕事のやる気が出ない...",
+                rows: 4,
+                maxlength: 200,
+                class: "input-field",
+                id: "worry-input",
+                required: true,
+                oninput: "document.getElementById('char-count').textContent = this.value.length + ' / 200'" %>
+          <p class="char-count"><span id="char-count">0</span> / 200</p>
+          <%= f.submit "⚡ 診断を開始する",
+                class: "btn-generate" %>
+        <% end %>
+      </div>
+
+      <div class="sample-section">
+        <p class="sample-label">サンプル入力</p>
+        <div class="sample-chips">
+          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="彼氏ができない">彼氏ができない</button>
+          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="仕事のやる気が出ない">やる気が出ない</button>
+          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="お金が全然貯まらない">お金が貯まらない</button>
+          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="友達が少ない気がする">友達が少ない</button>
+        </div>
+      </div>
+
+      <!-- Cat mascot image -->
+      <div class="cat-img-section">
+        <img src="/images/cat-mascot.png" alt="NECO" class="cat-img" data-stream-target="catAvatar">
+      </div>
+
+      <!-- Cat speech bubble -->
+      <div class="cat-section">
+        <div class="cat-body">
+          <p class="cat-name">NECO DIAGNOSTIC v2.4</p>
+          <p class="cat-bubble" data-stream-target="catBubble">悩みを入力して診断を開始してください</p>
+        </div>
+      </div>
+
+      <div class="cat-features">
+        <p class="cat-features-title">ErrorLog AI が診断すること</p>
+        <ul>
+          <li>悩みをエラーログ形式に変換</li>
+          <li>AIが原因と深刻度を分析</li>
+          <li>具体的な解決策を3つ提案</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── CENTER: Waiting ── -->
+    <div class="panel panel-center">
+      <div class="panel-header">
+        <span>SYSTEM CONSOLE</span>
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          READY
+        </div>
+      </div>
+      <div class="waiting-panel">
+        <div class="waiting-icon">⌨️</div>
+        <p class="waiting-text">悩みを入力して診断を開始すると<br>リアルタイムで解析結果が表示されます</p>
+      </div>
+      <div class="console-footer">
+        <span class="prompt">$ errorlog --analyze</span>
+        <span class="cursor-blink">_</span>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Waiting ── -->
+    <div class="panel panel-right">
+      <div class="panel-header">
+        <span>ERROR SUMMARY</span>
+        <span style="font-size:0.6rem;color:var(--text-mute)">AI ENGINE</span>
+      </div>
+
+      <div class="sys-status">
+        <div class="sys-status-row">
+          <span class="sys-key">STATUS</span>
+          <span class="sys-val">● ONLINE</span>
+        </div>
+        <div class="sys-status-row">
+          <span class="sys-key">MODEL</span>
+          <span class="sys-val purple">claude-sonnet-4-6</span>
+        </div>
+      </div>
+
+      <!-- Severity gauge (empty) -->
+      <div class="severity-section">
+        <p class="severity-label">深刻度</p>
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120" class="gauge-svg">
+            <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill" cx="60" cy="60" r="50"/>
+          </svg>
+          <div class="gauge-center">
+            <span class="gauge-pct">--</span>
+            <span class="gauge-risk" style="color:var(--text-mute)">WAITING</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics (empty) -->
+      <div class="metrics-section">
+        <p class="metrics-title">診断スコア</p>
+        <% [["自己肯定感", "self-esteem"], ["行動力", "action"], ["コミュカ", "communication"], ["感情度", "logic"]].each do |label, key| %>
+          <div class="metric-row">
+            <span class="metric-name"><%= label %></span>
+            <div class="metric-track"><div class="metric-bar-fill" style="width:0%"></div></div>
+            <span class="metric-val">--</span>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Suggested fix (empty) -->
+      <div class="fix-section">
+        <p class="fix-title">🔧 SUGGESTED FIX</p>
+        <p style="font-size:0.72rem;color:var(--text-mute)">診断後に表示されます</p>
+      </div>
+
+      <!-- Quote -->
+      <div class="quote-section">
+        <p class="quote-label">今日の名言</p>
+        <p class="quote-text" data-stream-target="quoteText"></p>
+      </div>
+
+      <!-- Popular -->
+      <% if @popular&.any? %>
+        <div style="padding:10px 14px;border-top:1px solid var(--border)">
+          <p class="metrics-title">人気の診断</p>
+          <% @popular.each do |log| %>
+            <a href="<%= error_log_path(log) %>" style="display:block;font-size:0.7rem;color:var(--text-dim);padding:4px 0;border-bottom:1px solid var(--border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='var(--text-dim)'">
+              👁 <%= log.view_count %> &nbsp; <%= log.input %>
+            </a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,30 @@
+# Environment
+*.env
+.env*
+.DS_Store
+
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/.keep
+/public/assets
+/public/packs
+/public/packs-test
+
+# Credentials
+/config/master.key
+/config/credentials/*.key
+
+# Storage
+/storage/*
+!/storage/.keep
+.byebug_history
+
+# Bundler
+/vendor/bundle
+
+# Node
+node_modules

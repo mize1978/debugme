@@ -1,0 +1,213 @@
+<% content_for :title, "ErrorLog AI — #{@error_log.input.truncate(30)}" %>
+
+<div class="app-layout"
+     data-controller="stream"
+     data-stream-url-value="<%= @error_log.output.blank? ? stream_error_log_path(@error_log) : "" %>"
+>
+
+  <!-- Header -->
+  <header class="app-header">
+    <a href="/" class="logo-img-wrap">
+      <img src="/images/errorlog-logo.jpg" alt="ErrorLog AI" class="logo-img">
+    </a>
+    <nav class="app-nav">
+      <a href="/">新しい診断</a>
+      <a href="/ranking">ランキング</a>
+    </nav>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      ANALYZING
+    </div>
+  </header>
+
+  <!-- 3-column grid -->
+  <div class="app-grid">
+
+    <!-- ── LEFT: Input display ── -->
+    <div class="panel panel-left">
+      <div class="panel-header">
+        <span>INPUT CONSOLE</span>
+        <div class="dots">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+        </div>
+      </div>
+
+      <div class="input-section">
+        <p class="input-label">診断した悩み</p>
+        <div class="input-field" style="cursor:default;min-height:80px;color:var(--text-dim)">
+          <%= @error_log.input %>
+        </div>
+        <a href="/" class="btn-generate mt-12" style="margin-top:10px;display:block;text-align:center">
+          + 新しい診断を始める
+        </a>
+      </div>
+
+      <!-- Cat mascot image -->
+      <div class="cat-img-section">
+        <img src="/images/cat-mascot.png" alt="NECO" class="cat-img analyzing" data-stream-target="catAvatar">
+      </div>
+
+      <!-- Cat speech bubble -->
+      <div class="cat-section">
+        <div class="cat-body">
+          <p class="cat-name">NECO DIAGNOSTIC v2.4</p>
+          <p class="cat-bubble" data-stream-target="catBubble">診断を開始します...</p>
+        </div>
+      </div>
+
+      <div class="cat-features">
+        <p class="cat-features-title">AI 診断ツール</p>
+        <ul>
+          <li>悩みをエラーログ形式に変換</li>
+          <li>原因と深刻度をAIが分析</li>
+          <li>解決策を3つ提案</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── CENTER: Console stream ── -->
+    <div class="panel panel-center">
+      <div class="panel-header">
+        <span>SYSTEM CONSOLE — REALTIME STREAM</span>
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          LIVE
+        </div>
+      </div>
+
+      <div class="console-body" data-stream-target="consoleBody">
+        <% if @error_log.output.present? %>
+          <!-- Already generated: show directly -->
+          <div class="console-line">
+            <span class="console-ts">[--:--:--]</span>
+            <span class="console-txt ok">Output loaded from cache ⚡</span>
+          </div>
+          <div class="error-log-divider" style="opacity:1;margin:14px 0 10px">
+            <div class="divider-line"></div>
+            <span class="divider-label">▼ ERROR LOG GENERATED</span>
+            <div class="divider-line"></div>
+          </div>
+          <div class="error-log-box" style="opacity:1"><%= @error_log.output %></div>
+        <% else %>
+          <!-- Streaming: boot sequence will go here -->
+          <div data-stream-target="bootSequence"></div>
+        <% end %>
+      </div>
+
+      <div class="console-footer">
+        <span class="prompt">$ errorlog --analyze "<%= @error_log.input.truncate(30) %>"</span>
+        <span class="cursor-blink">_</span>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Analysis ── -->
+    <div class="panel panel-right">
+      <div class="panel-header">
+        <span>ERROR SUMMARY</span>
+        <span style="font-size:0.6rem;color:var(--text-mute)">AI ENGINE</span>
+      </div>
+
+      <div class="sys-status">
+        <div class="sys-status-row">
+          <span class="sys-key">STATUS</span>
+          <span class="sys-val">● ONLINE</span>
+        </div>
+        <div class="sys-status-row">
+          <span class="sys-key">MODEL</span>
+          <span class="sys-val purple">claude-sonnet-4-6</span>
+        </div>
+        <div class="sys-status-row">
+          <span class="sys-key">LOG ID</span>
+          <span class="sys-val" style="color:var(--text-dim)">#<%= @error_log.id %></span>
+        </div>
+      </div>
+
+      <!-- Severity gauge -->
+      <div class="severity-section">
+        <p class="severity-label">深刻度</p>
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120" class="gauge-svg">
+            <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill" cx="60" cy="60" r="50"
+                    data-stream-target="gaugeFill"/>
+          </svg>
+          <div class="gauge-center">
+            <span class="gauge-pct" data-stream-target="gaugePct">--</span>
+            <span class="gauge-risk" data-stream-target="gaugeRisk" style="color:var(--text-mute)">ANALYZING</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric bars -->
+      <div class="metrics-section">
+        <p class="metrics-title">診断スコア</p>
+
+        <div class="metric-row">
+          <span class="metric-name">自己肯定感</span>
+          <div class="metric-track">
+            <div class="metric-bar-fill" data-stream-target="selfEsteemFill"></div>
+          </div>
+          <span class="metric-val" data-stream-target="selfEsteemVal">--</span>
+        </div>
+
+        <div class="metric-row">
+          <span class="metric-name">行動力</span>
+          <div class="metric-track">
+            <div class="metric-bar-fill" data-stream-target="actionFill"></div>
+          </div>
+          <span class="metric-val" data-stream-target="actionVal">--</span>
+        </div>
+
+        <div class="metric-row">
+          <span class="metric-name">コミュカ</span>
+          <div class="metric-track">
+            <div class="metric-bar-fill" data-stream-target="communicationFill"></div>
+          </div>
+          <span class="metric-val" data-stream-target="communicationVal">--</span>
+        </div>
+
+        <div class="metric-row">
+          <span class="metric-name">感情度</span>
+          <div class="metric-track">
+            <div class="metric-bar-fill" data-stream-target="logicFill"></div>
+          </div>
+          <span class="metric-val" data-stream-target="logicVal">--</span>
+        </div>
+      </div>
+
+      <!-- Suggested fix -->
+      <div class="fix-section">
+        <p class="fix-title">🔧 SUGGESTED FIX</p>
+        <ul class="fix-list" data-stream-target="fixList">
+          <% if @error_log.output.blank? %>
+            <li style="font-size:0.72rem;color:var(--text-mute)">診断後に表示されます...</li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- Share -->
+      <div class="share-section">
+        <p class="share-title">SHARE YOUR ERROR LOG</p>
+        <a href="#" target="_blank" rel="noopener"
+           class="btn-share btn-share-x"
+           data-stream-target="shareX">
+          𝕏 でシェアする
+        </a>
+        <button class="btn-share btn-share-copy"
+                data-action="click->stream#copy"
+                data-stream-target="shareCopy">
+          📋 コピーする
+        </button>
+      </div>
+
+      <!-- Quote -->
+      <div class="quote-section">
+        <p class="quote-label">今日の名言</p>
+        <p class="quote-text" data-stream-target="quoteText"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
