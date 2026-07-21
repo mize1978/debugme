@@ -28,7 +28,7 @@ export default class extends Controller {
     "actionFill", "actionVal",
     "communicationFill", "communicationVal",
     "logicFill", "logicVal",
-    "fixList",
+    "fixList", "fixProgressWrap", "fixProgressFill", "fixProgressPct",
     "shareX", "shareCopy",
     "quoteText",
   ]
@@ -60,7 +60,7 @@ export default class extends Controller {
 
   // ── Boot sequence ──
   runBoot() {
-    this.setCat("analyzing", "", "接続中...")
+    this.setCat("analyzing", "", "...")
     BOOT.forEach(step => setTimeout(() => this.renderStep(step), step.delay))
     setTimeout(() => {
       this.bootDone = true
@@ -113,10 +113,11 @@ export default class extends Controller {
 
   // ── Render result ──
   async renderComplete(data) {
+    try {
     await this.wait(200)
     this.addLine("⚠️  ERROR DETECTED — ログ生成完了", "err")
     await this.wait(350)
-    this.setCat("alert", "alert", "エラー検出！解析完了")
+    this.setCat("alert", "alert", "ログを整理しています...")
 
     await this.wait(400)
     const divider = document.createElement("div")
@@ -135,6 +136,18 @@ export default class extends Controller {
     await this.wait(300)
     await this.typewrite(data.error_log || "", box)
 
+    if (data.caused_by || data.hint || data.log_time) {
+      const meta = document.createElement("div")
+      meta.className = "error-log-meta"
+      meta.innerHTML = [
+        data.caused_by ? `<span class="meta-key">Caused by:</span> <span class="meta-val">${this.esc(data.caused_by)}</span>` : "",
+        data.hint      ? `<span class="meta-key">Hint:</span>      <span class="meta-hint">${this.esc(data.hint)}</span>` : "",
+        data.log_time  ? `<span class="meta-key">Time:</span>      <span class="meta-dim">${this.esc(data.log_time)}</span>` : "",
+        data.log_id    ? `<span class="meta-key">ID:</span>        <span class="meta-dim">${this.esc(data.log_id)}</span>` : "",
+      ].filter(Boolean).join("\n")
+      box.appendChild(meta)
+    }
+
     // デカ目ピクセル猫をエラーログの右側に出す
     const pixelCat = document.createElement("img")
     pixelCat.src = "/images/cat-pixel.png"
@@ -144,12 +157,13 @@ export default class extends Controller {
     setTimeout(() => pixelCat.classList.add("visible"), 150)
 
     await this.wait(500)
-    this.setCat("fix", "fix", "大丈夫！解決策があるよ！")
+    this.setCat("fix", "fix", "ログが完成しました。")
     this.animateGauges(data.summary || {})
 
     await this.wait(600)
     this.renderFixes(data.suggested_fix || [])
     this.updateShare(data)
+    } catch(e) { console.error("renderComplete error:", e) }
   }
 
   // ── Gauges ──
@@ -164,8 +178,8 @@ export default class extends Controller {
     else if (sev >= 40) { riskCls = "mid";  riskLabel = "MODERATE"  }
     else                { riskCls = "low";  riskLabel = "LOW RISK"  }
 
-    this.gaugeFillTarget.className   = `gauge-fill ${riskCls}`
-    this.gaugeRiskTarget.className   = `gauge-risk ${riskCls}`
+    this.gaugeFillTarget.setAttribute("class", `gauge-fill ${riskCls}`)
+    this.gaugeRiskTarget.setAttribute("class", `gauge-risk ${riskCls}`)
     this.gaugeRiskTarget.textContent = riskLabel
 
     this.setBar("selfEsteem",    "SelfEsteem",    s.self_esteem   || 0)
@@ -191,6 +205,14 @@ export default class extends Controller {
       this.fixListTarget.appendChild(li)
       setTimeout(() => li.classList.add("visible"), i * 280)
     })
+    if (fixes.length > 0 && this.hasFixProgressWrapTarget) {
+      this.fixProgressWrapTarget.style.display = "block"
+      const pct = Math.min(30 + fixes.length * 20, 90)
+      setTimeout(() => {
+        this.fixProgressFillTarget.style.width = `${pct}%`
+        this.fixProgressPctTarget.textContent   = `${pct}%`
+      }, 100)
+    }
   }
 
   // ── Share ──

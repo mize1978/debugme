@@ -7,11 +7,12 @@
 
   <!-- Header -->
   <header class="app-header">
-    <a href="/" class="logo-img-wrap">
-      <img src="/images/errorlog-logo.jpg" alt="DebugMe" class="logo-img">
-    </a>
+    <div class="header-brand">
+      <a href="/" class="app-logo"><span class="logo-bug">🐛</span>DebugMe</a>
+      <p class="app-tagline">Small fixes. Better days.</p>
+    </div>
     <nav class="app-nav">
-      <a href="/">新しい診断</a>
+      <a href="/">新しいデバッグ</a>
       <a href="/ranking">ランキング</a>
     </nav>
     <div class="status-pill">
@@ -35,30 +36,30 @@
       </div>
 
       <div class="input-section">
-        <p class="input-label">診断した悩み</p>
+        <p class="input-label">Debug Input</p>
         <div class="input-field" style="cursor:default;min-height:80px;color:var(--text-dim)">
           <%= @debug_log.input %>
         </div>
         <a href="/" class="btn-generate mt-12" style="margin-top:10px;display:block;text-align:center">
-          + 新しい診断を始める
+          + 新しいデバッグを始める
         </a>
       </div>
 
       <!-- Cat mascot image -->
       <div class="cat-img-section">
-        <img src="/images/cat-mascot.png" alt="NECO" class="cat-img analyzing" data-stream-target="catAvatar">
+        <img src="/images/cat-mascot.png" alt="RUBBER DUCK" class="cat-img analyzing" data-stream-target="catAvatar">
       </div>
 
       <!-- Cat speech bubble -->
       <div class="cat-section">
         <div class="cat-body">
-          <p class="cat-name">NECO DIAGNOSTIC v2.4</p>
-          <p class="cat-bubble" data-stream-target="catBubble">診断を開始します...</p>
+          <p class="cat-name">DEBUG CAT v1.0</p>
+          <p class="cat-bubble" data-stream-target="catBubble">今日は何がありましたか？</p>
         </div>
       </div>
 
       <div class="cat-features">
-        <p class="cat-features-title">AI 診断ツール</p>
+        <p class="cat-features-title">Debug Tool</p>
         <ul>
           <li>悩みをデバッグログ形式に変換</li>
           <li>原因と深刻度をAIが分析</li>
@@ -142,7 +143,7 @@
 
       <!-- Metric bars -->
       <div class="metrics-section">
-        <p class="metrics-title">診断スコア</p>
+        <p class="metrics-title">Log Summary</p>
 
         <div class="metric-row">
           <span class="metric-name">自己肯定感</span>
@@ -169,7 +170,7 @@
         </div>
 
         <div class="metric-row">
-          <span class="metric-name">感情度</span>
+          <span class="metric-name">理想の高さ</span>
           <div class="metric-track">
             <div class="metric-bar-fill" data-stream-target="logicFill"></div>
           </div>
@@ -182,9 +183,18 @@
         <p class="fix-title">🔧 SUGGESTED FIX</p>
         <ul class="fix-list" data-stream-target="fixList">
           <% if @debug_log.output.blank? %>
-            <li style="font-size:0.72rem;color:var(--text-mute)">診断後に表示されます...</li>
+            <li style="font-size:0.72rem;color:var(--text-mute)">デバッグ後に表示されます...</li>
           <% end %>
         </ul>
+        <div class="fix-progress-wrap" data-stream-target="fixProgressWrap" style="display:none;margin-top:10px;">
+          <div class="fix-progress-label">
+            <span style="font-size:0.62rem;color:var(--text-mute);letter-spacing:0.1em">修復プログレス</span>
+            <span class="fix-progress-pct" data-stream-target="fixProgressPct">0%</span>
+          </div>
+          <div class="fix-progress-track">
+            <div class="fix-progress-fill" data-stream-target="fixProgressFill"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Share -->
@@ -194,7 +204,7 @@
            class="btn-share btn-share-x"
            data-stream-target="shareX">
           𝕏 でシェアする
-        </a>
+        </div>
         <button class="btn-share btn-share-copy"
                 data-action="click->stream#copy"
                 data-stream-target="shareCopy">
@@ -205,9 +215,13 @@
       <!-- Quote -->
       <div class="quote-section">
         <p class="quote-label">今日の名言</p>
-        <p class="quote-text" data-stream-target="quoteText"></p>
+        <p class="quote-text"><span class="quote-cat">🐱</span> <%= @quote %></p>
       </div>
     </div>
 
   </div>
+
+  <footer class="app-footer">
+    © 2026 DebugMe | Powered by Claude AI ♡
+  </footer>
 </div>

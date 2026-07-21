@@ -1,9 +1,20 @@
 class DebugLogsController < ApplicationController
   include ActionController::Live
 
+  DAILY_QUOTES = [
+    "バグは悪くない。バグってるのは自分じゃなくて、環境だ。",
+    "Small fixes. Better days.",
+    "エラーは、次の一歩のログ。",
+    "人生はデバッグの繰り返し。",
+    "コードも心も、リファクタリングで輝く。",
+    "404: 完璧な人間は見つかりません。",
+    "エラーは成長への招待状。",
+  ].freeze
+
   def new
     @debug_log = DebugLog.new
     @popular   = DebugLog.where.not(output: nil).order(view_count: :desc).limit(5)
+    @quote     = DAILY_QUOTES[Date.today.yday % DAILY_QUOTES.size]
   end
 
   def create
@@ -23,6 +34,7 @@ class DebugLogsController < ApplicationController
   def show
     @debug_log = DebugLog.find(params[:id])
     @debug_log.increment!(:view_count)
+    @quote = DAILY_QUOTES[Date.today.yday % DAILY_QUOTES.size]
   end
 
   def stream
@@ -49,10 +61,17 @@ class DebugLogsController < ApplicationController
 
       @debug_log.update!(output: data["error_log"])
 
+      log_time = @debug_log.created_at.strftime("%Y-%m-%d %H:%M:%S")
+      log_id   = "DM-#{@debug_log.created_at.to_i}-#{SecureRandom.hex(3).upcase}"
+
       sse.write(
         {
           type:          "complete",
           summary:       data["summary"],
+          caused_by:     data["caused_by"],
+          hint:          data["hint"],
+          log_time:      log_time,
+          log_id:        log_id,
           error_log:     data["error_log"],
           suggested_fix: data["suggested_fix"]
         }.to_json,

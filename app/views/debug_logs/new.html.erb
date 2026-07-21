@@ -4,9 +4,10 @@
 
   <!-- Header -->
   <header class="app-header">
-    <a href="/" class="logo-img-wrap">
-      <img src="/images/errorlog-logo.jpg" alt="DebugMe" class="logo-img">
-    </a>
+    <div class="header-brand">
+      <a href="/" class="app-logo"><span class="logo-bug">🐛</span>DebugMe</a>
+      <p class="app-tagline">Small fixes. Better days.</p>
+    </div>
     <nav class="app-nav">
       <a href="/ranking">ランキング</a>
     </nav>
@@ -42,7 +43,7 @@
                 required: true,
                 oninput: "document.getElementById('char-count').textContent = this.value.length + ' / 200'" %>
           <p class="char-count"><span id="char-count">0</span> / 200</p>
-          <%= f.submit "⚡ 診断を開始する",
+          <%= f.submit "> デバッグを開始する <",
                 class: "btn-generate" %>
         <% end %>
       </div>
@@ -50,28 +51,36 @@
       <div class="sample-section">
         <p class="sample-label">サンプル入力</p>
         <div class="sample-chips">
-          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="彼氏ができない">彼氏ができない</button>
-          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="仕事のやる気が出ない">やる気が出ない</button>
-          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="お金が全然貯まらない">お金が貯まらない</button>
-          <button class="sample-chip" onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'" data-text="友達が少ない気がする">友達が少ない</button>
+          <% [
+            ["仕事が続かない",     "仕事が続かない"],
+            ["やる気が出ない",     "やる気が出ない"],
+            ["将来が不安",         "将来が不安"],
+            ["人間関係がつらい",   "人間関係がつらい"],
+            ["お金が貯まらない",   "お金が全然貯まらない"],
+            ["自分に自信がない",   "自分に自信がない"],
+          ].each do |label, full| %>
+            <button type="button" class="sample-chip"
+              onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'"
+              data-text="<%= full %>"><%= label %></button>
+          <% end %>
         </div>
       </div>
 
       <!-- Cat mascot image -->
       <div class="cat-img-section">
-        <img src="/images/cat-mascot.png" alt="NECO" class="cat-img" data-stream-target="catAvatar">
+        <img src="/images/cat-mascot.png" alt="RUBBER DUCK" class="cat-img" data-stream-target="catAvatar">
       </div>
 
       <!-- Cat speech bubble -->
       <div class="cat-section">
         <div class="cat-body">
-          <p class="cat-name">NECO DIAGNOSTIC v2.4</p>
-          <p class="cat-bubble" data-stream-target="catBubble">悩みを入力して診断を開始してください</p>
+          <p class="cat-name">DEBUG CAT v1.0</p>
+          <p class="cat-bubble" data-stream-target="catBubble">I'm listening.</p>
         </div>
       </div>
 
       <div class="cat-features">
-        <p class="cat-features-title">DebugMe が診断すること</p>
+        <p class="cat-features-title">Debug Tool</p>
         <ul>
           <li>悩みをデバッグログ形式に変換</li>
           <li>AIが原因と深刻度を分析</li>
@@ -91,7 +100,7 @@
       </div>
       <div class="waiting-panel">
         <div class="waiting-icon">⌨️</div>
-        <p class="waiting-text">悩みを入力して診断を開始すると<br>リアルタイムで解析結果が表示されます</p>
+        <p class="waiting-text">悩みを入力してデバッグを開始すると<br>リアルタイムでログが生成されます</p>
       </div>
       <div class="console-footer">
         <span class="prompt">$ debugme --analyze</span>
@@ -134,8 +143,8 @@
 
       <!-- Metrics (empty) -->
       <div class="metrics-section">
-        <p class="metrics-title">診断スコア</p>
-        <% [["自己肯定感", "self-esteem"], ["行動力", "action"], ["コミュカ", "communication"], ["感情度", "logic"]].each do |label, key| %>
+        <p class="metrics-title">Log Summary</p>
+        <% [["自己肯定感", "self-esteem"], ["行動力", "action"], ["コミュカ", "communication"], ["理想の高さ", "logic"]].each do |label, key| %>
           <div class="metric-row">
             <span class="metric-name"><%= label %></span>
             <div class="metric-track"><div class="metric-bar-fill" style="width:0%"></div></div>
@@ -147,19 +156,19 @@
       <!-- Suggested fix (empty) -->
       <div class="fix-section">
         <p class="fix-title">🔧 SUGGESTED FIX</p>
-        <p style="font-size:0.72rem;color:var(--text-mute)">診断後に表示されます</p>
+        <p style="font-size:0.72rem;color:var(--text-mute)">デバッグ後に表示されます</p>
       </div>
 
       <!-- Quote -->
       <div class="quote-section">
         <p class="quote-label">今日の名言</p>
-        <p class="quote-text" data-stream-target="quoteText"></p>
+        <p class="quote-text"><span class="quote-cat">🐱</span> <%= @quote %></p>
       </div>
 
       <!-- Popular -->
       <% if @popular&.any? %>
         <div style="padding:10px 14px;border-top:1px solid var(--border)">
-          <p class="metrics-title">人気の診断</p>
+          <p class="metrics-title">人気のデバッグログ</p>
           <% @popular.each do |log| %>
             <a href="<%= debug_log_path(log) %>" style="display:block;font-size:0.7rem;color:var(--text-dim);padding:4px 0;border-bottom:1px solid var(--border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='var(--text-dim)'">
               👁 <%= log.view_count %> &nbsp; <%= log.input %>
@@ -170,4 +179,8 @@
     </div>
 
   </div>
+
+  <footer class="app-footer">
+    © 2026 DebugMe | Powered by Claude AI ♡
+  </footer>
 </div>
