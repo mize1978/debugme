@@ -47,7 +47,7 @@ AIは裏方。答えを出すのはあなた自身。
 ## 🐈 Meet Neco
 
 <p align="center">
-  <img src="./docs/neco-profile.png" width="700">
+  <img src="./docs/neco-profile.png" width="900">
 </p>
 
 > *"DebugMe never speaks first."*
@@ -62,13 +62,15 @@ and helps you discover your own next step.
 
 ### Character Profile
 
-- 🐈 **Name:** Neco
-- 🤖 **Role:** AI Debug Partner
-- 💜 **Personality:** Quiet, kind, and patient
-- 🎧 **Special Skill:** Turning worries into structured error logs
-- ☕ **Loves:** Code, debugging, and listening
-- 🐾 **Motto:**
-  > *"Let's debug today together."*
+| | |
+|---|---|
+| **Name** | Neco |
+| **Role** | AI Error Log Assistant |
+| **Personality** | Quiet but kind |
+| **Special Skill** | Finding hidden bugs in thoughts |
+| **Likes** | Coffee · Listening · Debugging |
+| **Dislikes** | Being ignored · Undefined variables · Infinite loops |
+| **Motto** | *"Let's debug today together. にゃーん。"* |
 
 ---
 
@@ -165,4 +167,13 @@ rails s
 
 ---
 
-MIT License · Made by [MIZE](https://github.com/mize)
+MIT License · Made by [MIZE](https://github.com/mize1978)
+
+---
+
+🐈 Thanks for visiting.
+
+Remember,
+
+> *"You are not a bug.*
+> *You're just debugging."*
