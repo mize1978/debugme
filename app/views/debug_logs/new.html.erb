@@ -49,15 +49,15 @@
       </div>
 
       <div class="sample-section">
-        <p class="sample-label">サンプル入力</p>
+        <p class="sample-label">SAMPLE INPUT</p>
         <div class="sample-chips">
           <% [
-            ["仕事が続かない",     "仕事が続かない"],
-            ["やる気が出ない",     "やる気が出ない"],
-            ["将来が不安",         "将来が不安"],
-            ["人間関係がつらい",   "人間関係がつらい"],
-            ["お金が貯まらない",   "お金が全然貯まらない"],
-            ["自分に自信がない",   "自分に自信がない"],
+            ["就職が決まらない",   "就職がなかなか決まらない"],
+            ["恋人ができない",     "恋人ができない"],
+            ["SNS疲れ",           "SNSを見るたびに疲れてしまう"],
+            ["お金がない",         "お金が全然貯まらない"],
+            ["勉強が続かない",     "勉強が続かない"],
+            ["やる気が出ない",     "やる気が全然出ない"],
           ].each do |label, full| %>
             <button type="button" class="sample-chip"
               onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'"
