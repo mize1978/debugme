@@ -30,11 +30,13 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg-deep);
+  background-color: #090913;
   background-image:
-    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
-    radial-gradient(circle at top, #1b1440 0%, transparent 60%);
-  background-size: 100% 3px, 100% 100%;
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    radial-gradient(ellipse 130% 55% at 50% 0%, #2a1050 0%, #100a28 40%, transparent 70%),
+    linear-gradient(180deg, #1c0d38 0%, #0e0d22 40%, #090913 100%);
+  background-size: 100% 3px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
   color: var(--text);
   font-family: 'Inter', 'Zen Kaku Gothic New', sans-serif;
   min-height: 100vh;
@@ -398,6 +400,7 @@ body {
   transition: stroke-dashoffset 1.5s ease, stroke 0.5s;
   filter: drop-shadow(0 0 6px rgba(155,68,255,0.6));
 }
+.gauge-fill.critical { stroke: var(--pink);   filter: drop-shadow(0 0 8px rgba(255,73,200,0.9)); }
 .gauge-fill.high  { stroke: var(--red);    filter: drop-shadow(0 0 6px rgba(255,68,102,0.6)); }
 .gauge-fill.mid   { stroke: var(--yellow); filter: drop-shadow(0 0 6px rgba(255,204,68,0.5)); }
 .gauge-fill.low   { stroke: var(--green);  filter: drop-shadow(0 0 6px rgba(68,255,170,0.5)); }
@@ -408,6 +411,7 @@ body {
 }
 .gauge-pct { font-family: 'VT323', monospace; font-size: 2rem; font-weight: 400; color: var(--text); }
 .gauge-risk { font-size: 0.6rem; letter-spacing: 0.12em; margin-top: 2px; }
+.gauge-risk.critical { color: var(--pink); }
 .gauge-risk.high   { color: var(--red); }
 .gauge-risk.mid    { color: var(--yellow); }
 .gauge-risk.low    { color: var(--green); }
@@ -476,9 +480,9 @@ body {
 .share-title { font-size: 0.62rem; color: var(--text-mute); letter-spacing: 0.15em; margin-bottom: 10px; }
 .btn-share {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; padding: 14px 12px; margin-bottom: 8px; border-radius: 6px;
-  font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'JetBrains Mono', monospace;
-  border: 1px solid; cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em;
+  width: 100%; padding: 16px 12px; margin-bottom: 10px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 700; text-decoration: none; font-family: 'JetBrains Mono', monospace;
+  border: 1px solid; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em;
 }
 .btn-share-x { border-color: rgba(255,255,255,0.15); color: var(--text); background: rgba(255,255,255,0.04); }
 .btn-share-x:hover { background: rgba(255,255,255,0.1); }

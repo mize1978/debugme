@@ -1,18 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
 
 const BOOT = [
-  { type: "line", cls: "ok",   text: "✓ Booting DebugMe v1.0.0...",                          delay: 0    },
-  { type: "line", cls: "info", text: "  Connecting to Claude API...",                         delay: 420  },
-  { type: "line", cls: "ok",   text: "✓ Connection established ⚡",                           delay: 820  },
-  { type: "line", cls: "info", text: "  Initializing AI engine (claude-sonnet-4-6)...",       delay: 1100 },
-  { type: "prog", label: "Analyzing input data...   ",                                         delay: 1380 },
-  { type: "line", cls: "ok",   text: "✓ Input processed",                                     delay: 1700 },
-  { type: "prog", label: "Building diagnostic context...",                                      delay: 1950 },
-  { type: "prog", label: "Generating error log...  ",                                           delay: 2350 },
-  { type: "line", cls: "warn", text: "  Compiling stack trace...",                             delay: 2700 },
-  { type: "line", cls: "ok",   text: "✓ Stream ready ⚡",                                     delay: 2900 },
+  { type: "line", cls: "ok",   text: "✓ Booting DebugMe v1.0.0...",                    delay: 0    },
+  { type: "line", cls: "info", text: "  Connecting to Claude API...",                   delay: 420  },
+  { type: "line", cls: "ok",   text: "✓ Connection established ⚡",                     delay: 820  },
+  { type: "line", cls: "info", text: "  Initializing AI engine (claude-sonnet-4-6)...", delay: 1100 },
+  { type: "prog", label: "Analyzing input data...   ", pct: 38,                          delay: 1380 },
+  { type: "line", cls: "ok",   text: "✓ Input tokenized",                               delay: 1680 },
+  { type: "prog", label: "Building diagnostic context...", pct: 72,                      delay: 1940 },
+  { type: "prog", label: "Generating error log...   ", pct: 100,                         delay: 2340 },
+  { type: "line", cls: "warn", text: "  Compiling stack trace...",                       delay: 2680 },
+  { type: "line", cls: "ok",   text: "✓ Stream ready ⚡",                               delay: 2880 },
 ]
-const BOOT_DONE = 3200
+const BOOT_DONE = 3150
 
 const QUOTES = [
   "バグは仕様だ — Anonymous Engineer",
@@ -81,6 +81,7 @@ export default class extends Controller {
       return
     }
     if (step.type === "prog") {
+      const pct = step.pct ?? 100
       const el = document.createElement("div")
       el.className = "console-progress"
       el.innerHTML = `
@@ -90,8 +91,8 @@ export default class extends Controller {
       `
       this.bootSequenceTarget.appendChild(el)
       requestAnimationFrame(() => {
-        el.querySelector(".progress-fill").style.width = "100%"
-        el.querySelector(".progress-pct").textContent  = "100%"
+        el.querySelector(".progress-fill").style.width = `${pct}%`
+        el.querySelector(".progress-pct").textContent  = `${pct}%`
       })
     }
   }
@@ -177,9 +178,10 @@ export default class extends Controller {
     this.gaugePctTarget.textContent = `${sev}%`
 
     let riskCls, riskLabel
-    if (sev >= 70)      { riskCls = "high"; riskLabel = "HIGH RISK" }
-    else if (sev >= 40) { riskCls = "mid";  riskLabel = "MODERATE"  }
-    else                { riskCls = "low";  riskLabel = "LOW RISK"  }
+    if (sev >= 90)      { riskCls = "critical"; riskLabel = "CRITICAL"  }
+    else if (sev >= 70) { riskCls = "high";     riskLabel = "HIGH RISK" }
+    else if (sev >= 40) { riskCls = "mid";      riskLabel = "MODERATE"  }
+    else                { riskCls = "low";      riskLabel = "LOW RISK"  }
 
     this.gaugeFillTarget.setAttribute("class", `gauge-fill ${riskCls}`)
     this.gaugeRiskTarget.setAttribute("class", `gauge-risk ${riskCls}`)

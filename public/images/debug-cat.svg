@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff49c8"/>
+      <stop offset="100%" stop-color="#5ee6ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Face outline (gradient) -->
+  <circle cx="32" cy="38" r="20" stroke="url(#g)" stroke-width="2.4"/>
+
+  <!-- Left ear (pink) -->
+  <path d="M13 30 L21 10 L28 26" stroke="#ff49c8" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Right ear (cyan) -->
+  <path d="M51 30 L43 10 L36 26" stroke="#5ee6ff" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Left eye  ">"  pink -->
+  <path d="M19 32 L27 36 L19 40" stroke="#ff49c8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right eye "<" cyan -->
+  <path d="M45 32 L37 36 L45 40" stroke="#5ee6ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Nose (tiny, pink) -->
+  <path d="M30 46 L32 49 L34 46" stroke="#ff49c8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Left whiskers (pink) -->
+  <line x1="4"  y1="37" x2="13" y2="39" stroke="#ff49c8" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="4"  y1="43" x2="13" y2="42" stroke="#ff49c8" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  <!-- Right whiskers (cyan) -->
+  <line x1="51" y1="39" x2="60" y2="37" stroke="#5ee6ff" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="51" y1="42" x2="60" y2="43" stroke="#5ee6ff" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Sparkle top-right -->
+  <path d="M56 7 L57 4 L58 7 L61 8 L58 9 L57 12 L56 9 L53 8 Z" fill="#5ee6ff" opacity="0.55"/>
+  <!-- Dot top-left -->
+  <circle cx="6" cy="20" r="1.8" fill="#ff49c8" opacity="0.5"/>
+</svg>
