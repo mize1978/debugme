@@ -4,8 +4,28 @@
   <img src="./docs/banner.png" width="100%">
 </p>
 
+<p align="center">
+  <a href="https://debugme-2m5k.onrender.com"><strong>🔗 Live Demo</strong></a>
+  &nbsp;·&nbsp;
+  <a href="#what-is-debugme">About</a>
+  &nbsp;·&nbsp;
+  <a href="#demo">Demo</a>
+  &nbsp;·&nbsp;
+  <a href="#architecture">Architecture</a>
+</p>
+
+<p align="center">
+  <img alt="Ruby" src="https://img.shields.io/badge/Ruby-3.1.4-CC342D?logo=ruby&logoColor=white">
+  <img alt="Rails" src="https://img.shields.io/badge/Rails-7.2-CC0000?logo=rubyonrails&logoColor=white">
+  <img alt="Claude" src="https://img.shields.io/badge/Claude-sonnet--4--6-D97757">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-blue">
+</p>
+
 > **Debug your day.**
 > AI-powered thought debugging.
+>
+> 🔗 **Try it live → [debugme-2m5k.onrender.com](https://debugme-2m5k.onrender.com)**
+> *(free instance — first load may take ~50s to wake up)*
 
 ---
 
