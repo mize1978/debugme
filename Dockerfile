@@ -1,5 +1,14 @@
 FROM ruby:3.1.4-slim
 
+# Fix env for build AND runtime so dev/test-only gems (e.g. the `debug`
+# gem's debug/prelude) are never required. Without this, any command that
+# runs without RAILS_ENV=production (e.g. db:prepare in the entrypoint)
+# boots in development and crashes with:
+#   LoadError: cannot load such file -- debug/prelude
+ENV RAILS_ENV="production" \
+    RACK_ENV="production" \
+    BUNDLE_WITHOUT="development:test"
+
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -11,11 +20,11 @@ RUN apt-get update -qq && \
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --without development test
+RUN bundle install
 
 COPY . .
 
-RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
+RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
 RUN chmod +x bin/docker-entrypoint
 
