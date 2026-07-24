@@ -82,14 +82,13 @@ and helps you discover your own next step.
 
 ## Features
 
-- ✅ AI-powered Thought Debugging
-- ✅ Streaming Response
-- ✅ AI Summary
-- ✅ Reflection Support
-- ✅ Prompt Engineering
-- ✅ Claude API
-- ✅ Server-Sent Events
-- ✅ Markdown Rendering
+*What DebugMe does for you:*
+
+- **Thought → Error Log** — turns a worry into a structured, debuggable error log
+- **Real-time streaming** — watch Neco analyze your input line by line, live
+- **Severity & diagnostics** — a 0–100% "severity" gauge plus self-esteem / action / communication scores
+- **Suggested fixes** — three concrete, bite-sized next steps
+- **Reflection, not answers** — DebugMe reflects your thoughts back so *you* decide
 
 ---
 
@@ -97,26 +96,45 @@ and helps you discover your own next step.
 
 | Layer | Technology |
 |---|---|
-| Backend | Ruby on Rails |
-| Frontend | Hotwire (Turbo + Stimulus) |
-| AI | Claude API |
-| Streaming | Server-Sent Events |
+| Language | Ruby 3.1.4 |
+| Backend | Ruby on Rails 7.2 |
+| Frontend | Hotwire (Turbo + Stimulus), Import Maps (no Node build) |
+| AI | Claude API (`claude-sonnet-4-6`), streaming |
+| Realtime | Server-Sent Events via `ActionController::Live` |
 | Database | PostgreSQL |
-| Infrastructure | Docker · Render |
+| Cache / Rate-limit | Redis + Rack::Attack |
+| Infrastructure | Docker · Render (Blueprint) |
 
 ---
 
 ## Architecture
 
+DebugMe streams the analysis to the browser in real time. The worry is
+persisted first, then a dedicated SSE endpoint pipes Claude's streaming
+output straight to a Stimulus controller — no polling, no page reload.
+
 ```mermaid
 flowchart TD
-    A[User Input] --> B[Prompt Builder]
-    B --> C[Claude API]
-    C --> D[Streaming Response]
-    D --> E[Error Log]
-    E --> F[Summary]
-    F --> G[Reflection]
+    subgraph Browser
+        A["Stimulus controller<br/>(EventSource)"]
+    end
+    subgraph Rails
+        B["DebugLogsController#create<br/>persist worry"] --> C["DebugLogsController#stream<br/>ActionController::Live + SSE"]
+        C --> D["DebugLogGenerator<br/>prompt builder"]
+    end
+    E["Claude API<br/>(streaming)"]
+    F[("PostgreSQL")]
+
+    A -- "POST worry" --> B
+    A -- "open SSE" --> C
+    D -- "stream tokens" --> E
+    E -- "chunks" --> C
+    C -- "parse JSON, persist log" --> F
+    C == "SSE: complete event<br/>(error_log, summary, fixes)" ==> A
+    A --> G[Render: boot log → error log<br/>→ severity gauge → suggested fixes]
 ```
+
+**Flow:** `Input → persist → SSE stream → Claude → Error Log → Summary → Reflection`
 
 ---
 
@@ -158,26 +176,44 @@ DebugMe shows what AI *shouldn't* do — and why that restraint matters.
 
 ## Setup
 
+**Requirements:** Ruby 3.1.4 · PostgreSQL · Redis
+
 ```bash
+# 1. Start PostgreSQL and Redis (e.g. via Homebrew)
+brew services start postgresql
+brew services start redis
+
+# 2. Install dependencies (Import Maps — no Node/yarn needed)
 bundle install
-rails db:create db:migrate
+
+# 3. Configure environment
 cp .env.example .env
-# Set ANTHROPIC_API_KEY
-rails s
+#   → set ANTHROPIC_API_KEY (required)
+
+# 4. Database
+bin/rails db:create db:migrate
+
+# 5. Run
+bin/rails s   # http://localhost:3000
 ```
 
 ## Environment Variables
 
-| Key | Description |
-|---|---|
-| `ANTHROPIC_API_KEY` | Anthropic API key |
-| `RAILS_MASTER_KEY` | Rails credentials master key |
-| `DATABASE_URL` | PostgreSQL URL (production) |
-| `REDIS_URL` | Redis URL |
+| Key | Required | Description |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | ✅ | Anthropic API key (Claude) |
+| `RAILS_MASTER_KEY` | prod | Rails credentials master key (`config/master.key`) |
+| `DATABASE_HOST` / `DATABASE_PASSWORD` | dev | Local PostgreSQL connection |
+| `DATABASE_URL` | prod | PostgreSQL URL (Render provides this) |
+| `REDIS_URL` | ✅ | Redis URL — defaults to `redis://localhost:6379` in dev |
+
+> **Deploy:** `render.yaml` is a Blueprint that provisions Web + Redis +
+> PostgreSQL in one click. Set `ANTHROPIC_API_KEY` and `RAILS_MASTER_KEY`
+> as secrets in the Render dashboard.
 
 ---
 
-MIT License · Made by [MIZE](https://github.com/mize1978)
+MIT License — see [LICENSE](./LICENSE). Made by [MIZE](https://github.com/mize1978)
 
 ---
 
