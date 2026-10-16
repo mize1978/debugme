@@ -117,11 +117,11 @@ body { background-color:#020207; background-image:radial-gradient(ellipse at 8% 
 .error-log-box { display:grid; grid-template-columns:minmax(0,1fr) 116px; align-items:start; }
 .error-log-scroll { grid-column:1; grid-row:1; min-width:0; padding-right:8px; }
 .error-log-text { padding-right:0; }
-.error-pixel-cat { position:relative; grid-column:2; grid-row:1; right:auto; bottom:auto; align-self:start; width:105px; height:105px; margin:118px 10px 16px 0; }
+.error-pixel-cat { position:relative; grid-column:2; grid-row:1; right:auto; bottom:auto; align-self:center; width:105px; height:105px; margin:80px 10px 16px 0; }
 @media(max-width:640px) {
   .error-log-box { grid-template-columns:minmax(0,1fr) 88px; }
   .error-log-scroll { padding-left:10px; padding-right:6px; }
-  .error-pixel-cat { width:78px; height:78px; margin:90px 8px 12px 0; }
+  .error-pixel-cat { width:78px; height:78px; margin:60px 8px 12px 0; }
 }
 
 .sound-toggle { border:1px solid #655575; border-radius:5px; padding:7px 9px; background:#0a0712; color:var(--text-dim); font:inherit; font-size:10px; cursor:pointer; white-space:nowrap; }
