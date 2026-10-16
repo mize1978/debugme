@@ -112,3 +112,12 @@ body { background-color:#020207; background-image:radial-gradient(ellipse at 8% 
 @media(max-width:960px) { .panel-right { align-items:stretch; } }
 .error-log-box { white-space:normal; }
 .panel-left:has(.input-section + .cat-img-section) .cat-img-section { grid-row:3 / span 2; }
+
+/* Keep the mascot in its own row so it never covers log text or metadata. */
+.error-log-box { display:flex; flex-direction:column; }
+.error-log-scroll { flex:0 1 auto; min-width:0; }
+.error-pixel-cat { position:relative; right:auto; bottom:auto; align-self:flex-end; flex-shrink:0; margin:0 16px 16px; }
+
+.sound-toggle { border:1px solid #655575; border-radius:5px; padding:7px 9px; background:#0a0712; color:var(--text-dim); font:inherit; font-size:10px; cursor:pointer; white-space:nowrap; }
+.sound-toggle[aria-pressed="true"] { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 8px #5ee6ff22; }
+.sound-toggle:focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }

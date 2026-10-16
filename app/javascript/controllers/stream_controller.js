@@ -97,6 +97,7 @@ export default class extends Controller {
 
   // ── Boot sequence ──
   runBoot() {
+    this.element.dispatchEvent(new CustomEvent("debugme:sound", { bubbles: true, detail: { kind: "start" } }))
     const msg = CAT_MESSAGES[this.category] || CAT_MESSAGES.default
     this.setCat("analyzing", "", msg.analyzing)
     BOOT.forEach(step => {
@@ -159,6 +160,7 @@ export default class extends Controller {
   renderFailure(message) {
     if (this.failed) return
     this.failed = true
+    this.element.dispatchEvent(new CustomEvent("debugme:sound", { bubbles: true, detail: { kind: "error" } }))
     this.clearBootTimers()
 
     this.addLine("ERROR: AI connection failed", "err")
@@ -279,6 +281,7 @@ export default class extends Controller {
       kids.slice(0, Math.max(0, kids.length - 6)).forEach(el => el.remove())
       this.addLine("──────────────────────────────", "dim")
       this.addLine("✓ Debug Complete", "ok")
+      this.element.dispatchEvent(new CustomEvent("debugme:sound", { bubbles: true, detail: { kind: "complete" } }))
       this.addLine(`Neco: ${doneMsg}`, "purple")
       this.setCat("fix", "fix", doneMsg)
 
