@@ -90,6 +90,17 @@ body {
   border: 1px solid var(--border); border-radius: 20px;
   padding: 4px 10px;
 }
+
+.status-pill--error {
+  color: var(--red);
+  border-color: rgba(255, 74, 106, 0.45);
+  background: rgba(255, 74, 106, 0.1);
+}
+
+.status-pill--error .status-dot {
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
 
 /* ── 3-Column Grid ── */
@@ -103,6 +114,20 @@ body {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}
+
+.app-grid > *,
+.panel,
+.panel-center,
+.panel-right {
+  min-width: 0;
+}
+
+.input-privacy-note {
+  margin-top: 10px;
+  color: var(--text-mute);
+  font-size: 0.64rem;
+  line-height: 1.65;
 }
 
 /* ── Panel Base ── */
@@ -412,6 +437,29 @@ body {
   display: flex; flex-direction: column; gap: 7px;
   border-bottom: 1px solid var(--border);
 }
+
+.sys-val--error { color: var(--red) !important; }
+
+.stream-error-message {
+  color: var(--red);
+  line-height: 1.6;
+}
+
+.stream-retry-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 74, 106, 0.55);
+  border-radius: 6px;
+  background: rgba(255, 74, 106, 0.12);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.stream-retry-btn:hover {
+  background: rgba(255, 74, 106, 0.22);
+}
 .sys-status-row {
   display: flex; justify-content: space-between; align-items: center;
   font-size: 0.65rem;
@@ -620,9 +668,14 @@ body::after {
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .app-grid { grid-template-columns: 260px 1fr 260px; }
+  .app-grid { grid-template-columns: 230px minmax(0, 1fr) 230px; }
+  .panel-header { padding-inline: 12px; letter-spacing: 0.1em; }
+  .console-progress { flex-wrap: wrap; }
+  .progress-label { min-width: 100%; }
 }
 @media (max-width: 768px) {
   .app-grid { grid-template-columns: 1fr; }
   .panel-right { order: -1; }
+  .app-header { flex-wrap: wrap; gap: 10px; }
+  .app-tagline { letter-spacing: 0.2em; }
 }

@@ -100,7 +100,11 @@ class DebugLogsController < ApplicationController
         event: "complete"
       )
     rescue => e
-      sse.write({ type: "error", message: e.message }.to_json, event: "error")
+      Rails.logger.error("DebugMe generation failed: #{e.class}: #{e.message}")
+      sse.write(
+        { type: "error", message: "AIとの接続に失敗しました。時間をおいて再試行してください。" }.to_json,
+        event: "error"
+      )
     ensure
       sse.close
     end

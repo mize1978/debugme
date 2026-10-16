@@ -3,16 +3,12 @@ import { Controller } from "@hotwired/stimulus"
 const BOOT = [
   { type: "line", cls: "ok",   text: "✓ Booting DebugMe v1.0.0...",                    delay: 0    },
   { type: "line", cls: "info", text: "  Connecting to Claude API...",                   delay: 420  },
-  { type: "line", cls: "ok",   text: "✓ Connection established ⚡",                     delay: 820  },
-  { type: "line", cls: "info", text: "  Initializing AI engine (claude-sonnet-4-6)...", delay: 1100 },
-  { type: "prog", label: "Analyzing input data...   ", pct: 38,                          delay: 1380 },
-  { type: "line", cls: "ok",   text: "✓ Input tokenized",                               delay: 1680 },
-  { type: "prog", label: "Building diagnostic context...", pct: 72,                      delay: 1940 },
-  { type: "prog", label: "Generating error log...   ", pct: 100,                         delay: 2340 },
-  { type: "line", cls: "warn", text: "  Compiling stack trace...",                       delay: 2680 },
-  { type: "line", cls: "ok",   text: "✓ Stream ready ⚡",                               delay: 2880 },
+  { type: "line", cls: "info", text: "  Waiting for AI response...",                    delay: 900  },
+  { type: "prog", label: "Preparing diagnostic context...", pct: 38,                     delay: 1380 },
+  { type: "prog", label: "Analyzing input data...      ", pct: 72,                       delay: 1940 },
+  { type: "prog", label: "Generating error log...      ", pct: 90,                       delay: 2340 },
 ]
-const BOOT_DONE = 3150
+const BOOT_DONE = 2600
 
 const QUOTES = [
   "バグは仕様だ — Anonymous Engineer",
@@ -43,13 +39,15 @@ export default class extends Controller {
     "logicFill", "logicVal",
     "fixList", "fixProgressWrap", "fixProgressFill", "fixProgressPct",
     "shareX", "shareCopy",
-    "quoteText",
+    "quoteText", "headerStatus", "engineStatus",
   ]
   static values = { url: String, input: String }
 
   connect() {
     this.bootDone    = false
     this.pendingData = null
+    this.failed      = false
+    this.bootTimers  = []
     this.shareUrl    = window.location.href
     this.category    = this.detectCategory(this.hasInputValue ? this.inputValue : "")
 
@@ -65,6 +63,7 @@ export default class extends Controller {
 
   disconnect() {
     if (this.es) this.es.close()
+    this.clearBootTimers()
   }
 
   // ── Quote ──
@@ -100,11 +99,13 @@ export default class extends Controller {
   runBoot() {
     const msg = CAT_MESSAGES[this.category] || CAT_MESSAGES.default
     this.setCat("analyzing", "", msg.analyzing)
-    BOOT.forEach(step => setTimeout(() => this.renderStep(step), step.delay))
-    setTimeout(() => {
+    BOOT.forEach(step => {
+      this.bootTimers.push(setTimeout(() => this.renderStep(step), step.delay))
+    })
+    this.bootTimers.push(setTimeout(() => {
       this.bootDone = true
       if (this.pendingData) this.renderComplete(this.pendingData)
-    }, BOOT_DONE)
+    }, BOOT_DONE))
   }
 
   renderStep(step) {
@@ -145,15 +146,61 @@ export default class extends Controller {
         this.pendingData = data
       }
     })
-    this.es.addEventListener("error", () => {
+    this.es.addEventListener("error", e => {
       this.es.close()
-      this.addLine("ERROR: AI connection failed", "err")
+      let message = "AIとの接続に失敗しました"
+      if (e.data) {
+        try { message = JSON.parse(e.data).message || message } catch (_) {}
+      }
+      this.renderFailure(message)
     })
+  }
+
+  renderFailure(message) {
+    if (this.failed) return
+    this.failed = true
+    this.clearBootTimers()
+
+    this.addLine("ERROR: AI connection failed", "err")
+    this.addLine("解析を完了できませんでした。", "warn")
+    this.setCat("alert", "alert", "接続できなかったにゃ。\nもう一度試してみてね。")
+
+    if (this.hasHeaderStatusTarget) {
+      this.headerStatusTarget.textContent = "ERROR"
+      this.headerStatusTarget.classList.add("status-pill--error")
+    }
+    if (this.hasEngineStatusTarget) {
+      this.engineStatusTarget.textContent = "● OFFLINE"
+      this.engineStatusTarget.classList.add("sys-val--error")
+    }
+    if (this.hasGaugeRiskTarget) {
+      this.gaugeRiskTarget.textContent = "FAILED"
+      this.gaugeRiskTarget.className = "gauge-risk critical"
+    }
+    if (this.hasFixListTarget) {
+      this.fixListTarget.innerHTML = `
+        <li class="stream-error-message">${this.esc(message)}</li>
+        <li><button type="button" class="stream-retry-btn" data-action="click->stream#retry">もう一度試す</button></li>
+      `
+    }
+  }
+
+  retry() {
+    window.location.reload()
+  }
+
+  clearBootTimers() {
+    this.bootTimers.forEach(timer => clearTimeout(timer))
+    this.bootTimers = []
   }
 
   // ── Render result ──
   async renderComplete(data) {
     try {
+      if (this.failed) return
+      this.clearBootTimers()
+      if (this.hasHeaderStatusTarget) this.headerStatusTarget.textContent = "COMPLETE"
+      if (this.hasEngineStatusTarget) this.engineStatusTarget.textContent = "● ONLINE"
       await this.wait(200)
       this.addLine("⚠️  ERROR DETECTED — ログ生成完了", "err")
       await this.wait(350)

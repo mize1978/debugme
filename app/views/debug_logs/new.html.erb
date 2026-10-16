@@ -13,7 +13,7 @@
     </nav>
     <div class="status-pill">
       <span class="status-dot"></span>
-      SYSTEM ONLINE
+      SYSTEM READY
     </div>
   </header>
 
@@ -45,6 +45,9 @@
           <p class="char-count"><span id="char-count">0</span> / 200</p>
           <%= f.submit "> エラーログを生成する <",
                 class: "btn-generate" %>
+          <p class="input-privacy-note">
+            入力内容はAIによる解析のため送信され、結果がランキングに表示される場合があります。個人を特定できる情報は入力しないでください。
+          </p>
         <% end %>
       </div>
 
@@ -106,11 +109,11 @@
         </div>
         <div class="console-line" style="animation-delay:0.45s">
           <span class="console-ts">[<%= Time.now.strftime("%H:%M:%S") %>]</span>
-          <span class="console-txt ok">✓ Claude Engine Ready</span>
+          <span class="console-txt info">AI接続は解析開始時に確認します</span>
         </div>
         <div class="console-line" style="animation-delay:0.8s">
           <span class="console-ts">[<%= Time.now.strftime("%H:%M:%S") %>]</span>
-          <span class="console-txt ok">✓ Neco AI Initialized</span>
+          <span class="console-txt ok">✓ Neco UI Initialized</span>
         </div>
 
         <div class="idle-divider" style="opacity:0;animation:fadeInLine 0.4s ease 1.25s forwards">
@@ -121,7 +124,7 @@
 
         <div class="console-line" style="animation-delay:1.7s">
           <span class="console-ts"></span>
-          <span class="console-txt info">Neco AI Assistant initialized.</span>
+          <span class="console-txt info">Neco is ready for your request.</span>
         </div>
         <div class="console-line" style="animation-delay:2.0s">
           <span class="console-ts"></span>
@@ -153,11 +156,11 @@
       <div class="sys-status">
         <div class="sys-status-row">
           <span class="sys-key">STATUS</span>
-          <span class="sys-val">● ONLINE</span>
+          <span class="sys-val purple">● STANDBY</span>
         </div>
         <div class="sys-status-row">
           <span class="sys-key">MODEL</span>
-          <span class="sys-val purple">claude-sonnet-4-6</span>
+          <span class="sys-val">--</span>
         </div>
       </div>
 
