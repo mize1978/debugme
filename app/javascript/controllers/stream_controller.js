@@ -224,6 +224,12 @@ export default class extends Controller {
       box.className = "error-log-box"
       divider.after(box)
 
+      const heart = document.createElement("img")
+      heart.src = "/images/broken-pixel-heart.svg"
+      heart.className = "error-broken-heart"
+      heart.alt = ""
+      box.appendChild(heart)
+
       // スクロールする内側ラッパー（猫は box 直下に置くので一緒にスクロールしない）
       const scroll = document.createElement("div")
       scroll.className = "error-log-scroll"

@@ -6,7 +6,7 @@
   <header class="app-header">
     <div class="header-brand">
       <a href="/" class="app-logo"><img src="/images/debug-cat.svg" class="logo-cat" alt="Neco">DebugMe</a>
-      <p class="app-tagline">Small fixes. Better days.</p>
+      <p class="app-tagline">あなたの悩みをAIがエラーログに変換します</p>
     </div>
     <nav class="app-nav">
       <a href="/ranking">ランキング</a>
@@ -41,7 +41,7 @@
                 class: "input-field",
                 id: "worry-input",
                 required: true,
-                oninput: "document.getElementById('char-count').textContent = this.value.length + ' / 200'" %>
+                oninput: "document.getElementById('char-count').textContent = this.value.length" %>
           <p class="char-count"><span id="char-count">0</span> / 200</p>
           <%= f.submit "> エラーログを生成する <",
                 class: "btn-generate" %>
@@ -63,7 +63,7 @@
             ["やる気が出ない",     "やる気が全然出ない"],
           ].each do |label, full| %>
             <button type="button" class="sample-chip"
-              onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length+' / 200'"
+              onclick="document.querySelector('#worry-input').value=this.dataset.text;document.getElementById('char-count').textContent=this.dataset.text.length"
               data-text="<%= full %>"><%= label %></button>
           <% end %>
         </div>
@@ -84,7 +84,7 @@
       </div>
 
       <div class="cat-features">
-        <p class="cat-features-title">Debug Tool</p>
+        <p class="cat-features-title">DebugMe があなたをサポート</p>
         <ul>
           <li>悩みをデバッグログ形式に変換</li>
           <li>AIが原因と深刻度を分析</li>
@@ -148,8 +148,9 @@
 
     <!-- ── RIGHT: Waiting ── -->
     <div class="panel panel-right">
+      <div class="summary-card">
       <div class="panel-header">
-        <span>DEBUG SUMMARY</span>
+        <span>ERROR SUMMARY</span>
         <span style="font-size:0.6rem;color:var(--text-mute)">AI ENGINE</span>
       </div>
 
@@ -191,10 +192,19 @@
         <% end %>
       </div>
 
+      </div>
+
       <!-- Suggested fix (empty) -->
       <div class="fix-section">
-        <p class="fix-title">🔧 SUGGESTED FIX</p>
+        <p class="fix-title">SUGGESTED FIX</p>
         <p style="font-size:0.72rem;color:var(--text-mute)">デバッグ後に表示されます</p>
+      </div>
+
+      <div class="share-section">
+        <p class="share-title">SHARE YOUR ERROR LOG</p>
+        <p class="fix-subtitle">生成したエラーログをシェアする</p>
+        <button type="button" class="btn-share btn-share-x" disabled>𝕏（Twitter）でシェア</button>
+        <button type="button" class="btn-share btn-share-copy" disabled>エラーログをコピー</button>
       </div>
 
       <!-- Debug Hint -->

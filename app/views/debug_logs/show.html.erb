@@ -10,7 +10,7 @@
   <header class="app-header">
     <div class="header-brand">
       <a href="/" class="app-logo"><img src="/images/debug-cat.svg" class="logo-cat" alt="Neco">DebugMe</a>
-      <p class="app-tagline">Small fixes. Better days.</p>
+      <p class="app-tagline">あなたの悩みをAIがエラーログに変換します</p>
     </div>
     <nav class="app-nav">
       <a href="/">新しいデバッグ</a>
@@ -18,7 +18,7 @@
     </nav>
     <div class="status-pill" data-stream-target="headerStatus">
       <span class="status-dot"></span>
-      ANALYZING
+      <%= @debug_log.output.present? ? "COMPLETE" : "ANALYZING" %>
     </div>
   </header>
 
@@ -60,7 +60,7 @@
       </div>
 
       <div class="cat-features">
-        <p class="cat-features-title">Debug Tool</p>
+        <p class="cat-features-title">DebugMe があなたをサポート</p>
         <ul>
           <li>悩みをデバッグログ形式に変換</li>
           <li>原因と深刻度をAIが分析</li>
@@ -72,7 +72,7 @@
     <!-- ── CENTER: Console stream ── -->
     <div class="panel panel-center">
       <div class="panel-header">
-        <span>SYSTEM CONSOLE — REALTIME STREAM</span>
+        <span>SYSTEM CONSOLE <small class="console-subtitle">REALTIME STREAM</small></span>
         <div class="live-badge">
           <span class="live-dot"></span>
           LIVE
@@ -91,7 +91,11 @@
             <span class="divider-label">▼ ERROR LOG GENERATED</span>
             <div class="divider-line"></div>
           </div>
-          <div class="error-log-box" style="opacity:1"><%= @debug_log.output %></div>
+          <div class="error-log-box" style="opacity:1">
+            <img src="/images/broken-pixel-heart.svg" class="error-broken-heart" alt="">
+            <div class="error-log-scroll"><div class="error-log-text"><%= @debug_log.output %></div></div>
+            <img src="/images/cat-pixel.png" class="error-pixel-cat visible" alt="泣いているドット絵の猫">
+          </div>
         <% else %>
           <!-- Streaming: boot sequence will go here -->
           <div data-stream-target="bootSequence"></div>
@@ -106,15 +110,16 @@
 
     <!-- ── RIGHT: Analysis ── -->
     <div class="panel panel-right">
+      <div class="summary-card">
       <div class="panel-header">
-        <span>DEBUG SUMMARY</span>
+        <span>ERROR SUMMARY</span>
         <span style="font-size:0.6rem;color:var(--text-mute)">AI ENGINE</span>
       </div>
 
       <div class="sys-status">
         <div class="sys-status-row">
           <span class="sys-key">STATUS</span>
-          <span class="sys-val" data-stream-target="engineStatus">● CONNECTING</span>
+          <span class="sys-val" data-stream-target="engineStatus"><%= @debug_log.output.present? ? "● SAVED LOG" : "● CONNECTING" %></span>
         </div>
         <div class="sys-status-row">
           <span class="sys-key">MODEL</span>
@@ -137,7 +142,7 @@
           </svg>
           <div class="gauge-center">
             <span class="gauge-pct" data-stream-target="gaugePct">--</span>
-            <span class="gauge-risk" data-stream-target="gaugeRisk" style="color:var(--text-mute)">ANALYZING</span>
+            <span class="gauge-risk" data-stream-target="gaugeRisk" style="color:var(--text-mute)"><%= @debug_log.output.present? ? "NO SAVED SCORE" : "ANALYZING" %></span>
           </div>
         </div>
       </div>
@@ -177,6 +182,8 @@
           </div>
           <span class="metric-val" data-stream-target="logicVal">--</span>
         </div>
+      </div>
+
       </div>
 
       <!-- Suggested fix -->
