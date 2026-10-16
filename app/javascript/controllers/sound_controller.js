@@ -1,5 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Turbo navigation keeps this module and the user-unlocked audio context alive.
+let sharedContext = null
+
 export default class extends Controller {
   static targets = ["button"]
 
@@ -11,6 +14,8 @@ export default class extends Controller {
     this.element.addEventListener("debugme:sound", this.effect)
     document.addEventListener("pointerdown", this.unlock)
     document.addEventListener("keydown", this.unlock)
+    this.audioContext = sharedContext
+    if (this.audioContext) this.element.dataset.audioState = this.audioContext.state
     this.updateButton()
   }
 
@@ -18,7 +23,6 @@ export default class extends Controller {
     this.element.removeEventListener("debugme:sound", this.effect)
     document.removeEventListener("pointerdown", this.unlock)
     document.removeEventListener("keydown", this.unlock)
-    if (this.context) this.context.close().catch(() => {})
   }
 
   async toggle() {
@@ -40,9 +44,11 @@ export default class extends Controller {
     const Audio = window.AudioContext || window.webkitAudioContext
     if (!Audio) return null
     try {
-      if (!this.context) this.context = new Audio()
-      if (this.context.state === "suspended") await this.context.resume()
-      return this.context.state === "running" ? this.context : null
+      if (!sharedContext || sharedContext.state === "closed") sharedContext = new Audio()
+      this.audioContext = sharedContext
+      if (this.audioContext.state === "suspended") await this.audioContext.resume()
+      this.element.dataset.audioState = this.audioContext.state
+      return this.audioContext.state === "running" ? this.audioContext : null
     } catch (_) { return null }
   }
 
@@ -64,7 +70,7 @@ export default class extends Controller {
       oscillator.type = "sine"
       oscillator.frequency.value = frequency
       gain.gain.setValueAtTime(0, start)
-      gain.gain.linearRampToValueAtTime(0.035, start + 0.008)
+      gain.gain.linearRampToValueAtTime(0.075, start + 0.008)
       gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.11)
       oscillator.connect(gain)
       gain.connect(context.destination)

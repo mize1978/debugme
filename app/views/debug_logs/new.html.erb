@@ -34,7 +34,7 @@
 
       <div class="input-section">
         <p class="input-label">悩みを入力してください</p>
-        <%= form_with model: DebugLog.new, url: debug_logs_path, data: { turbo: false } do |f| %>
+        <%= form_with model: DebugLog.new, url: debug_logs_path do |f| %>
           <%= f.text_area :input,
                 placeholder: "例：彼氏から返信が来ない、仕事のやる気が出ない...",
                 rows: 4,
