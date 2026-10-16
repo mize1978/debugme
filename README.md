@@ -1,245 +1,131 @@
 # DebugMe
 
-<p align="center">
-  <img src="./docs/banner.png" width="100%">
-</p>
+**日本語** | [English](./README.en.md)
 
-<p align="center">
-  <a href="https://debugme-2m5k.onrender.com"><strong>🔗 Live Demo</strong></a>
-  &nbsp;·&nbsp;
-  <a href="#what-is-debugme">About</a>
-  &nbsp;·&nbsp;
-  <a href="#demo">Demo</a>
-  &nbsp;·&nbsp;
-  <a href="#architecture">Architecture</a>
-</p>
+<p align="center"><img src="./docs/banner.png" alt="DebugMeのビジュアル" width="100%"></p>
 
-<p align="center">
-  <img alt="Ruby" src="https://img.shields.io/badge/Ruby-3.1.4-CC342D?logo=ruby&logoColor=white">
-  <img alt="Rails" src="https://img.shields.io/badge/Rails-7.2-CC0000?logo=rubyonrails&logoColor=white">
-  <img alt="Claude" src="https://img.shields.io/badge/Claude-sonnet--4--6-D97757">
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-blue">
-</p>
+**悩みを、デバッグログに。**
+AIが悩みをエラーログ風に整理し、次の一歩を考えるためのヒントを返す思考整理ツールです。
 
-> **Debug your day.**
-> AI-powered thought debugging.
->
-> 🔗 **Try it live → [debugme-2m5k.onrender.com](https://debugme-2m5k.onrender.com)**
-> *(free instance — first load may take ~50s to wake up)*
+[**ライブデモを開く ↗**](https://debugme-2m5k.onrender.com) · [概要](#debugmeとは) · [機能](#機能) · [構成](#構成) · [セットアップ](#セットアップ)
 
----
+初回アクセス時などは、起動に時間がかかる場合があります。
 
-*DebugMe never speaks first.*
-*It listens. It organizes. It reflects.*
-*AI should support. Users should decide.*
+## DebugMeとは
 
----
+ラバーダックデバッグの「問題を言葉にして説明すると、整理のきっかけになる」という考え方から生まれたアプリです。
 
-## What is DebugMe?
+ユーザーが悩みを書き、AIがログの形に整理し、ユーザー自身が次の行動を考えます。医療・心理の診断を行うサービスではありません。表示される深刻度やスコアはAIが生成する表現であり、客観的な測定値ではありません。
 
-DebugMe is not an AI counselor.
-It helps you organize your own thoughts.
+> AIは裏方。答えを出すのはあなた自身。
 
-Inspired by rubber duck debugging — the idea that explaining a problem out loud helps you find the answer yourself — DebugMe gives that experience a structure. You write. AI listens. You decide.
+## 使い方
 
----
+1. 200文字以内で悩みを入力するか、サンプルを選びます。
+2. 「エラーログを生成する」を押します。
+3. 起動・解析のコンソール表示のあと、ログ、深刻度・スコア、短い解決案を確認します。
+4. ログをコピーしたり、Xへの投稿画面を開いたりできます。
 
-DebugMeは相談AIではありません。
-思考を整理するためのデバッグツールです。
+入力内容はClaude APIへ送信されます。生成されたログはURLから閲覧でき、ランキングにも掲載される場合があります。個人を特定できる情報は入力しないでください。
 
-プログラマーが使うラバーダックデバッグにインスピレーションを受けた、思考整理ツールです。
-AIは裏方。答えを出すのはあなた自身。
+## 機能
 
----
+- **悩みをエラーログへ変換**：エラー名、スタックトレース風の文章、原因、ヒントを生成
+- **解析中のコンソール表示**：起動ログや進行表示、完了時のタイプライター表示
+- **深刻度とスコア**：生成時にゲージと4つの指標を表示
+- **SUGGESTED FIX**：短い解決案を3つ表示
+- **共有**：ログのコピー、Xの投稿画面へのリンク、保存済みログのURL
+- **ランキング**：閲覧数順のログ一覧
+- **猫のNeco**：入力テーマに応じたメッセージ、ドット猫、割れたドットハート
+- **効果音**：初期状態はOFF。SOUNDをONにすると、切り替え時・解析開始・完了・接続エラー時に短い電子音を再生
+- **レスポンシブ表示と動きを減らす設定への対応**
 
-## Demo
+### 生成中の表示と保存内容
 
-**1. Waiting** — Neco is ready, but never speaks first.
+Claudeの応答はRailsがストリームで受け取ります。ブラウザにはSSEで進行通知を送り、JSONの解析完了後にログ・スコア・解決案などをまとめて渡します。画面の進行バーは演出であり、実際の解析率を計測したものではありません。
 
-![Waiting](./docs/idle.png)
+現在DBに保存する生成結果はエラーログ本文です。生成時のスコア・原因・ヒント・解決案は保存していないため、保存済みURLを開き直すと生成直後と同じ情報すべては再表示されません。スコア部分は未保存の表示になります。
 
-**2. Streaming** — your worry is analyzed in real time.
+## Necoについて
 
-![Streaming](./docs/demo.gif)
+<p align="center"><img src="./docs/neco-profile.png" alt="Necoのキャラクター画像" width="700"></p>
 
-**3. Result** — your worry, debugged.
+NecoはDebugMeの猫のアシスタントです。悩みを整理する画面に寄り添い、短いメッセージで次の一歩を支えます。
 
-![Result](./docs/hero.png)
+## 制作時のデモ素材
 
-*Input → Streaming → Log → Summary → Reflect*
+以下は初期UIの記録です。現在の配色・配置・機能の確認には[ライブデモ](https://debugme-2m5k.onrender.com)をご覧ください。
 
----
+![初期UIのデモ](./docs/demo.gif)
 
-## 🐈 Meet Neco
+## 技術スタック
 
-<p align="center">
-  <img src="./docs/neco-profile.png" width="900">
-</p>
+| 役割 | 技術 |
+| --- | --- |
+| 言語・バックエンド | Ruby 3.1.4 / Rails 7.2 |
+| フロントエンド | Hotwire / Stimulus / Importmap |
+| AI | Claude API / `claude-sonnet-4-6` / `ruby-anthropic` |
+| 通信 | Server-Sent Events / `ActionController::Live` |
+| DB | PostgreSQL |
+| リクエスト制限 | Rack::Attack / Redis |
+| 効果音 | Web Audio API |
+| 公開環境 | Docker / Render |
 
-> *"DebugMe never speaks first."*
+バージョンの指定は`.ruby-version`、`Gemfile`、`Gemfile.lock`、`Dockerfile`を参照してください。
 
-Neco is DebugMe's AI companion.
+## 構成
 
-Instead of giving immediate answers,
-Neco listens, organizes your thoughts,
-and helps you discover your own next step.
-
----
-
-### Character Profile
-
-| | |
-|---|---|
-| **Name** | Neco |
-| **Role** | AI Error Log Assistant |
-| **Personality** | Quiet but kind |
-| **Special Skill** | Finding hidden bugs in thoughts |
-| **Likes** | Coffee · Listening · Debugging |
-| **Dislikes** | Being ignored · Undefined variables · Infinite loops |
-| **Motto** | *"Let's debug today together. にゃーん。"* |
-
----
-
-## Features
-
-*What DebugMe does for you:*
-
-- **Thought → Error Log** — turns a worry into a structured, debuggable error log
-- **Real-time streaming** — watch Neco analyze your input line by line, live
-- **Severity & diagnostics** — a 0–100% "severity" gauge plus self-esteem / action / communication scores
-- **Suggested fixes** — three concrete, bite-sized next steps
-- **Reflection, not answers** — DebugMe reflects your thoughts back so *you* decide
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Language | Ruby 3.1.4 |
-| Backend | Ruby on Rails 7.2 |
-| Frontend | Hotwire (Turbo + Stimulus), Import Maps (no Node build) |
-| AI | Claude API (`claude-sonnet-4-6`), streaming |
-| Realtime | Server-Sent Events via `ActionController::Live` |
-| Database | PostgreSQL |
-| Cache / Rate-limit | Redis + Rack::Attack |
-| Infrastructure | Docker · Render (Blueprint) |
-
----
-
-## Architecture
-
-DebugMe streams the analysis to the browser in real time. The worry is
-persisted first, then a dedicated SSE endpoint pipes Claude's streaming
-output straight to a Stimulus controller — no polling, no page reload.
-
-```mermaid
-flowchart TD
-    subgraph Browser
-        A["Stimulus controller<br/>(EventSource)"]
-    end
-    subgraph Rails
-        B["DebugLogsController#create<br/>persist worry"] --> C["DebugLogsController#stream<br/>ActionController::Live + SSE"]
-        C --> D["DebugLogGenerator<br/>prompt builder"]
-    end
-    E["Claude API<br/>(streaming)"]
-    F[("PostgreSQL")]
-
-    A -- "POST worry" --> B
-    A -- "open SSE" --> C
-    D -- "stream tokens" --> E
-    E -- "chunks" --> C
-    C -- "parse JSON, persist log" --> F
-    C == "SSE: complete event<br/>(error_log, summary, fixes)" ==> A
-    A --> G[Render: boot log → error log<br/>→ severity gauge → suggested fixes]
+```text
+悩みを入力
+  → DebugLogsController#createで保存
+  → ブラウザがSSE接続を開始
+  → DebugLogGeneratorがClaude APIを呼び出す
+  → Railsが応答のJSONを解析
+  → ログ本文を保存し、結果一式をブラウザへ通知
+  → Stimulusがログ・ゲージ・解決案を表示
 ```
 
-**Flow:** `Input → persist → SSE stream → Claude → Error Log → Summary → Reflection`
+| ファイル | 役割 |
+| --- | --- |
+| `app/controllers/debug_logs_controller.rb` | 作成・表示・SSE・ランキング |
+| `app/services/debug_log_generator.rb` | Claudeへのプロンプトとストリーム受信 |
+| `app/javascript/controllers/stream_controller.js` | コンソール、結果表示、共有 |
+| `app/javascript/controllers/sound_controller.js` | 効果音のON/OFFと再生 |
+| `config/initializers/rack_attack.rb` | IP単位のリクエスト制限 |
 
----
+## セットアップ
 
-## Why I Built This
-
-AI services that generate answers are everywhere.
-
-But I wanted to build something different — an experience where AI supports the user's thinking, not replaces it.
-
-Most AI tools speak first. They suggest. They advise. They answer before you've finished thinking.
-
-DebugMe does none of that.
-
-It listens. It organizes. It reflects back what you said — so you can see your own thoughts more clearly.
-
-> *DebugMe never speaks first.*
-
-The user is always the protagonist. AI is the tool.
-
-This isn't just a product decision. It's a design philosophy I want to carry across everything I build.
-
-RewardMe shows what an experience can feel like.
-FrameLens shows what an algorithm can look like.
-DebugMe shows what AI *shouldn't* do — and why that restraint matters.
-
----
-
-## Roadmap
-
-- [ ] GitHub Login
-- [ ] Personal Debug History
-- [ ] AI Memory — Neco remembers your past logs
-- [ ] Weekly Reflection — look back on your week
-- [ ] Mood Timeline — visualize how you've changed
-- [ ] Multiple AI Models
-- [ ] Share Debug Log
-
----
-
-## Setup
-
-**Requirements:** Ruby 3.1.4 · PostgreSQL · Redis
+Ruby 3.1.4、PostgreSQL、Redisを用意します。以下はローカルでRailsを起動する手順です。
 
 ```bash
-# 1. Start PostgreSQL and Redis (e.g. via Homebrew)
-brew services start postgresql
-brew services start redis
-
-# 2. Install dependencies (Import Maps — no Node/yarn needed)
+git clone https://github.com/mize1978/debugme.git
+cd debugme
 bundle install
 
-# 3. Configure environment
-cp .env.example .env
-#   → set ANTHROPIC_API_KEY (required)
+# 自分の環境に合わせて設定
+export ANTHROPIC_API_KEY='your-api-key'
+export DATABASE_HOST='localhost'
+export DATABASE_PASSWORD='password'
+export REDIS_URL='redis://localhost:6379/0'
 
-# 4. Database
 bin/rails db:create db:migrate
-
-# 5. Run
-bin/rails s   # http://localhost:3000
+bin/rails server
 ```
 
-## Environment Variables
+[http://localhost:3000](http://localhost:3000)を開きます。DB設定の標準ユーザーは`postgres`です。異なるユーザーやポートを使う場合は、`DATABASE_URL`で接続先を指定できます。APIキーなどの秘密情報はコミットしないでください。
 
-| Key | Required | Description |
-|---|---|---|
-| `ANTHROPIC_API_KEY` | ✅ | Anthropic API key (Claude) |
-| `RAILS_MASTER_KEY` | prod | Rails credentials master key (`config/master.key`) |
-| `DATABASE_HOST` / `DATABASE_PASSWORD` | dev | Local PostgreSQL connection |
-| `DATABASE_URL` | prod | PostgreSQL URL (Render provides this) |
-| `REDIS_URL` | ✅ | Redis URL — defaults to `redis://localhost:6379` in dev |
+### 環境変数
 
-> **Deploy:** `render.yaml` is a Blueprint that provisions Web + Redis +
-> PostgreSQL in one click. Set `ANTHROPIC_API_KEY` and `RAILS_MASTER_KEY`
-> as secrets in the Render dashboard.
+| 変数 | 用途 |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Claude APIのキー。AI生成に必要 |
+| `DATABASE_HOST` / `DATABASE_PASSWORD` | ローカルDB接続先。標準値は`localhost` / `password` |
+| `DATABASE_URL` | PostgreSQL接続URL。本番ではRender側で設定 |
+| `REDIS_URL` | リクエスト制限用Redis。未指定時は`redis://localhost:6379/0` |
+| `RAILS_MASTER_KEY` | 本番のRails credentials用キー |
 
----
-
-MIT License — see [LICENSE](./LICENSE). Made by [MIZE](https://github.com/mize1978)
+Render向けの構成は`render.yaml`にあります。キーなどの秘密情報はRender側で設定します。
 
 ---
 
-🐈 Thanks for visiting.
-
-Remember,
-
-> *"You are not a bug.*
-> *You're just debugging."*
+MIT License — [LICENSE](./LICENSE) · Made by [MIZE](https://github.com/mize1978)
