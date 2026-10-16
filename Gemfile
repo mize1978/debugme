@@ -20,7 +20,7 @@ gem "jbuilder"
 gem "redis", ">= 4.0.1"
 
 # Claude API
-gem "anthropic", "~> 0.3"
+gem "ruby-anthropic", "~> 0.4.2"
 
 # Rate limiting
 gem "rack-attack"
